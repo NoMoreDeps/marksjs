@@ -52,14 +52,14 @@ jobs:
     - name: Publish MarksJs
       run: |
         cd publish/marks
-        yarn publish
+        yarn run publish
         cd ..
         cd ..
 
     - name: Publish Mermaid
       run: |
         cd Plugins/Mermaid/publish/mermaid
-        yarn publish
+        yarn run publish
         cd ..
         cd ..
         cd ..
@@ -68,7 +68,7 @@ jobs:
     - name: Publish Bootstrap
       run: |
         cd Plugins/Bootstrap/publish/bootstrap
-        npx publish
+        npx run publish
         cd ..
         cd ..
         cd ..
