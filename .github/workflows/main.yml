@@ -40,25 +40,26 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Configure Marks
-      run: npm i
+      if: steps.yarn-cache.outputs.cache-hit != 'true' # Over here!
+      run: yarn install
       
     - name: Build Marks
-      run: npx tsc
+      run: yarn tsc
     
     - name: Login to npm
-      run: npx npm-cli-login -u ${{secrets.NPM_USER}} -p ${{secrets.NPM_PASS}} -e ${{secrets.NPM_EMAIL}}
+      run: yarn npm-cli-login -u ${{secrets.NPM_USER}} -p ${{secrets.NPM_PASS}} -e ${{secrets.NPM_EMAIL}}
        
     - name: Publish MarksJs
       run: |
         cd publish/marks
-        npx publish
+        yarn publish
         cd ..
         cd ..
 
     - name: Publish Mermaid
       run: |
         cd Plugins/Mermaid/publish/mermaid
-        npx publish
+        yarn publish
         cd ..
         cd ..
         cd ..
