@@ -33,23 +33,20 @@ jobs:
     - name: Build Marks
       run: npx tsc
     
-    - name: Installing deps
-      run: npm i -g npm-cli-login publish
-    
     - name: Login to npm
-      run: npm-cli-login -u ${{secrets.NPM_USER}} -p ${{secrets.NPM_PASS}} -e ${{secrets.NPM_EMAIL}}
+      run: npx npm-cli-login -u ${{secrets.NPM_USER}} -p ${{secrets.NPM_PASS}} -e ${{secrets.NPM_EMAIL}}
        
     - name: Publish MarksJs
       run: |
         cd publish/marks
-        publish
+        npx publish
         cd ..
         cd ..
 
     - name: Publish Mermaid
       run: |
         cd Plugins/Mermaid/publish/mermaid
-        publish
+        npx publish
         cd ..
         cd ..
         cd ..
@@ -58,7 +55,7 @@ jobs:
     - name: Publish Bootstrap
       run: |
         cd Plugins/Bootstrap/publish/bootstrap
-        publish
+        npx publish
         cd ..
         cd ..
         cd ..
