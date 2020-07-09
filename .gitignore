@@ -1,0 +1,8 @@
+node_modules
+out
+dist
+!publish/**/dist
+plugins/**/node_modules
+plugins/**/out
+plugins/**/dist
+!plugins/**/publish/**

@@ -1,0 +1,1 @@
+node scripts\clean.js && node scripts\publish.js && node scripts\cp-to-www.js

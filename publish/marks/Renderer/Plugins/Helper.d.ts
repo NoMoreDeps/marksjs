@@ -1,0 +1,11 @@
+import { IRenderingEnine } from "../../Interfaces/IRenderingEngine";
+export declare const waitAsync: (delay?: number) => Promise<unknown>;
+export declare function loadScript(url: string): Promise<unknown>;
+export declare function loadAssets(urls: string[]): Promise<void>;
+export declare function formatMinSpace(text: string): string;
+export declare function prepareNestedRef(r: IRenderingEnine): void;
+export declare function processNestedRef(r: IRenderingEnine): void;
+export declare function prepareInternals(r: IRenderingEnine): void;
+export declare function processRef(r: IRenderingEnine): void;
+export declare function processInternals(r: IRenderingEnine, blocktype: string): void;
+export declare function applyStyle(r: IRenderingEnine, type: string): void;

@@ -1,0 +1,14 @@
+{
+  "name": "@marks-js/mermaid",
+  "version": "1.0.38",
+  "description": "Mermaid plugin for Marks rendering engine",
+  "main": "index.js",
+  "author": "NoMoreDeps",
+  "license": "MIT",
+  "devDependencies": {
+    "@marks-js/marks": "^1.0.59",
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}

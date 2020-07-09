@@ -1,0 +1,17 @@
+{
+  "name": "@marks-js/bootstrap",
+  "version": "1.0.5",
+  "description": "Bootstrap theme and plugins for Marks rendering engine",
+  "main": "index.js",
+  "author": "NoMoreDeps",
+  "repository": "https://github.com/NoMoreDeps/marksjs.git",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@marks-js/marks": "^1.0.38"
+  }
+}

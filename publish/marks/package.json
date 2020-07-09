@@ -1,0 +1,24 @@
+{
+  "name": "@marks-js/marks",
+  "version": "1.0.59",
+  "license": "MIT",
+  "main": "Index.js",
+  "types": "Index.d.ts",
+  "repository": "https://github.com/NoMoreDeps/marksjs.git",
+  "homepage": "https://marksjs.com",
+  "keywords": [
+    "markdown",
+    "documentation",
+    "markup"
+  ],
+  "devDependencies": {
+    "@types/node": "^12.12.17",
+    "typescript": "^3.9.5",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "pk": "yarn tsc && yarn webpack --entry ./out/App.js  --output ./www/js/app.js"
+  },
+  "dependencies": {}
+}
