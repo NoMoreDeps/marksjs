@@ -43,10 +43,21 @@ export function formatMinSpace(text: string): string {
 }
 
 export function prepareNestedRef(r: IRenderingEnine) {
-  const refRgx = /@@(\w+)@@/g; 
-  if (refRgx.test(r.content)) {
-    r.content = r.content.replace(refRgx, `<${r.options.refElt ?? "div"} data-mk-ref="true" id='$1'></${r.options.refElt ?? "div"}>`);
+  const refRgx = /@@([\w\.]+)@@/g;
+
+  let itm: RegExpExecArray | null = null;
+  console.log("context", r.context)
+  let ct = r.content;
+  while ((itm = refRgx.exec(r.content)) !== null ) {
+    const id = itm[0].substr(2).replace("@@", "");
+    console.log(id)
+    if (r?.context?.[id]) {
+      ct = ct.replace(`@@${id}@@`, r.context[id]);
+      continue;
+    }
+    ct = ct.replace(`@@${id}@@`, `<${r.options.refElt ?? "div"} data-mk-ref="true" id='${id}'></${r.options.refElt ?? "div"}>`);
   }
+  r.content = ct;
 }
 
 export function processNestedRef(r: IRenderingEnine) {
@@ -55,7 +66,8 @@ export function processNestedRef(r: IRenderingEnine) {
     if (d.id in r.globalRefs) {
       d.appendChild(r.globalRefs[d.id]);
       delete r.globalRefs[d.id];
-    } 
+      return;
+    }
   });
 }
 

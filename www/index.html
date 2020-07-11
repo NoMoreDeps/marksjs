@@ -63,7 +63,7 @@ blockquote > div {
   </style>
 </head>
 <body>
-  <template id="MD_TMP_">
+  <template id="MD_TMPj">
 #### Marks features
 Marks is a markup language that aims to keep what is great with Markdown, but with 
 simple addition that allows it to be extended in a very simpler way.
@@ -826,6 +826,12 @@ sequenceDiagram
   </template>
 
   <template id="MD_TMP">
+titi ::- ref:tt
+
+[marks]{{
+  ceci est un @@ph@@ @@tt@@
+}}
+    
   </template>
 
   <div class="container" style="background-color: white;">
@@ -840,7 +846,9 @@ sequenceDiagram
       ...Marks_Bootstrap.BsPlugins.map(_ => new _())
     );
 
-    
+    renderer.context = {
+      ph: "test"
+    };
    
     renderer.setThemeStyle({
     text: {

@@ -1,6 +1,6 @@
 {
   "name": "@marks-js/marks",
-  "version": "1.0.59",
+  "version": "1.0.67",
   "license": "MIT",
   "main": "Index.js",
   "types": "Index.d.ts",
@@ -13,6 +13,8 @@
   ],
   "devDependencies": {
     "@types/node": "^12.12.17",
+    "npm-cli-login": "^0.1.1",
+    "publish": "^0.6.0",
     "typescript": "^3.9.5",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"

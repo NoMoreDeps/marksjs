@@ -13,7 +13,7 @@ export declare class BaseModel {
     dirty: boolean;
     constructor(_RendererRepository: RendererRepository);
     reset(): void;
-    process(): void;
+    process(context: any): void;
     append(value: {
         text: string;
     }): void;

@@ -2,17 +2,18 @@ import { TRenderingOption } from "./IRenderingOption" ;
 import { IMarksRenderer }   from "./IMarksRenderer"  ;
 
 export interface IRenderingEnine {
-  globalRefs     : any                 ;
-  themeStyles    : any                 ;
-  weight         : number              ;
-  applyTo        : Array<string>       ;
-  options        : TRenderingOption    ;
-  content        : string              ;
-  domContent     : HTMLElement | null  ;
+  globalRefs     : any                  ;
+  themeStyles    : any                  ;  
+  weight         : number               ; 
+  applyTo        : Array<string>        ;
+  options        : TRenderingOption     ;
+  content        : string               ;
+  domContent     : HTMLElement | null   ;
   cloneRenderer ?: () => IMarksRenderer ;
-  render         : () => string        ;
-  canProcess     : () => boolean       ;
-  succeeded      : () => boolean       ;
+  context       ?: any                  ;
+  render         : () => string         ;
+  canProcess     : () => boolean        ;
+  succeeded      : () => boolean        ;
   set            : (
     type    : string,
     content : string,

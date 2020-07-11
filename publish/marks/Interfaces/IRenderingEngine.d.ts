@@ -9,6 +9,7 @@ export interface IRenderingEnine {
     content: string;
     domContent: HTMLElement | null;
     cloneRenderer?: () => IMarksRenderer;
+    context?: any;
     render: () => string;
     canProcess: () => boolean;
     succeeded: () => boolean;

@@ -7,6 +7,8 @@ Discover it on its official website ***[Marks Website](https://marksjs.com)***.
 
 **Marks** is almost compatible with Markdown, but brings more flexibility using styles, and allows the creation of custom components in an universal and easy way.
 
+![CI](https://github.com/NoMoreDeps/marksjs/workflows/CI/badge.svg)
+
 ### Installation
 ```sh
 # With npm

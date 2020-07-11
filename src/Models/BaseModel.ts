@@ -23,10 +23,11 @@ export class BaseModel {
     this.parse();
   }
 
-  process() {
+  process(context: any) {
     this.domElement = document.createElement(this.options.pElt ?? "p");
     const renderers = this._RendererRepository.getByType((this as unknown as IModel).type, this.get()).sort((a, b) => b.weight - a.weight);
     renderers.forEach((_, idx) => {
+      _.context = context;
      if (idx === 0) {
         this.output = _.render();
         if (_.domContent) {

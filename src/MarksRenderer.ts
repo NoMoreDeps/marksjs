@@ -20,6 +20,7 @@ export class MarksRenderer implements IMarksRenderer {
   protected _themeStyles   : any                ;
   public renderFinished   ?: () => void         ;
   public manualTrigger     : boolean = false    ;
+  public context           : any = {}           ;
 
   constructor(repo ?: RendererRepository) {
     this._rendererRepo = repo ?? new RendererRepository();
@@ -30,6 +31,7 @@ export class MarksRenderer implements IMarksRenderer {
     const res = new MarksRenderer(this._rendererRepo.clone());
     res["_themeStyles"] = this._themeStyles;
     res["_globalRefs"] = this._globalRefs;
+    res["context"] = this.context;
     res["_rendererRepo"]["refs"].forEach(_ => _.cloneRenderer = this.clone.bind(this));
     return res;
   }
@@ -252,7 +254,7 @@ export class MarksRenderer implements IMarksRenderer {
     })));*/
 
     filteredElts.forEach(_ => {
-      _.process();
+      _.process(this.context);
       //console.log(_.output);
     });
 

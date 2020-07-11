@@ -7,6 +7,7 @@ export declare class MarksRenderer implements IMarksRenderer {
     protected _themeStyles: any;
     renderFinished?: () => void;
     manualTrigger: boolean;
+    context: any;
     constructor(repo?: RendererRepository);
     clone(): MarksRenderer;
     setThemeStyle(themeStyles: any): void;
