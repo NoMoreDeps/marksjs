@@ -80,6 +80,11 @@ export class BaseModel {
         }
       }
     }
+    if (this.options["mk-show"]) {
+      if (!context[this.options["mk-show"]]) {
+        this.domElement = null;
+      }
+    }
   }
 
   append(value: {text: string}): void {}

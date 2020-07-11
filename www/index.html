@@ -828,8 +828,12 @@ sequenceDiagram
   <template id="MD_TMP">
 titi ::- ref:tt
 
-[marks]{{
-  ceci est un @@ph@@ @@tt@@
+[marks mk-show:cmp1]{{
+  ceci est un @@ph@@ 1
+}}
+
+[marks mk-show:cmp2]{{
+  ceci est un @@ph@@ 2
 }}
     
   </template>
@@ -847,7 +851,9 @@ titi ::- ref:tt
     );
 
     renderer.context = {
-      ph: "test"
+      ph   : "test" ,
+      cmp1 : true   ,
+      cmp2 : true
     };
    
     renderer.setThemeStyle({
