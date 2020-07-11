@@ -835,6 +835,8 @@ titi ::- ref:tt
 [marks mk-show:cmp2]{{
   ceci est un @@ph@@ 2
 }}
+
+* @@item@@ ::- mk-repeat:loop
     
   </template>
 
@@ -853,7 +855,12 @@ titi ::- ref:tt
     renderer.context = {
       ph   : "test" ,
       cmp1 : true   ,
-      cmp2 : true
+      cmp2 : true   ,
+      loop : [
+        {item: "Item 1"},
+        {item: "Item 2"},
+        {item: "Item 3"}
+      ]
     };
    
     renderer.setThemeStyle({

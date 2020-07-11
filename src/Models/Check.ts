@@ -6,8 +6,9 @@ import { RendererRepository } from "../Renderer/RendererRepository" ;
 export default class extends BaseModel {
   readonly type : string = "CHECK";
 
-  constructor(value: {text: string}, _RendererRepository: RendererRepository) {
+  constructor(value?: {text: string}, _RendererRepository?: RendererRepository) {
     super(_RendererRepository);
+    if (!value) return;
     this.reset();
     
     this.source = value.text;

@@ -3,7 +3,7 @@ import { RendererRepository } from "../Renderer/RendererRepository";
 import { IModel } from "./IModel";
 export declare type TModel = BaseModel & IModel;
 export declare class BaseModel {
-    private _RendererRepository;
+    private _RendererRepository?;
     source: string;
     cleanSource: string;
     output: string;
@@ -11,7 +11,7 @@ export declare class BaseModel {
     options: TRenderingOption;
     processed: number;
     dirty: boolean;
-    constructor(_RendererRepository: RendererRepository);
+    constructor(_RendererRepository?: RendererRepository | undefined);
     reset(): void;
     process(context: any): void;
     append(value: {
@@ -24,4 +24,5 @@ export declare class BaseModel {
         content: string;
         options: TRenderingOption;
     };
+    clone(): any;
 }

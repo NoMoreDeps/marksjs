@@ -5,8 +5,10 @@ import { RendererRepository } from "../Renderer/RendererRepository" ;
 export default class extends BaseModel {
   readonly type : string = "CODE";
 
-  constructor(value: {text: string}, _RendererRepository: RendererRepository) {
+  constructor(value?: {text: string}, _RendererRepository?: RendererRepository) {
     super(_RendererRepository);
+    if (!value) return;
+    
     this.parseOptions(`language:${value.text.trim().substr(3)}`);
     super.source = "";
   }

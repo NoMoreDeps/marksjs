@@ -4,8 +4,10 @@ import { RendererRepository } from "../Renderer/RendererRepository" ;
 
 export default class extends BaseModel implements IModel {
   readonly type: string = "TABLE";
-  constructor(value: {text: string}, _RendererRepository: RendererRepository) {
+  constructor(value?: {text: string}, _RendererRepository?: RendererRepository) {
     super(_RendererRepository);
+    if (!value) return;
+    
     let source = value.text;
     let opts = "";
 

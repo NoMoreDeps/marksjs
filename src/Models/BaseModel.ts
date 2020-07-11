@@ -13,7 +13,7 @@ export class BaseModel {
   processed   : number             = 0    ;
   dirty       : boolean            = false;
 
-  constructor(private _RendererRepository: RendererRepository) {}
+  constructor(private _RendererRepository?: RendererRepository) {}
 
   reset() {
     this.cleanSource = "" ;
@@ -25,7 +25,7 @@ export class BaseModel {
 
   process(context: any) {
     this.domElement = document.createElement(this.options.pElt ?? "p");
-    const renderers = this._RendererRepository.getByType((this as unknown as IModel).type, this.get()).sort((a, b) => b.weight - a.weight);
+    const renderers = this._RendererRepository!.getByType((this as unknown as IModel).type, this.get()).sort((a, b) => b.weight - a.weight);
     renderers.forEach((_, idx) => {
       _.context = context;
      if (idx === 0) {
@@ -110,5 +110,16 @@ export class BaseModel {
       content : this.cleanSource,
       options : this.options
     };
+  } 
+
+  clone() {
+    const duplicated = new ((this as Object).constructor as any)();
+    duplicated["_RendererRepository"] = this["_RendererRepository"] ;
+    duplicated.options                = this.options                ;
+    duplicated.source                 = this.source                 ;
+    duplicated.cleanSource            = this.cleanSource            ;
+    duplicated.output                 = this.output                 ;
+
+    return duplicated;
   }
 }

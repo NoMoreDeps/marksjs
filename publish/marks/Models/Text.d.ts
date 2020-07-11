@@ -3,9 +3,9 @@ import { IModel } from "./IModel";
 import { RendererRepository } from "../Renderer/RendererRepository";
 export default class extends BaseModel implements IModel {
     type: string;
-    constructor(value: {
+    constructor(value?: {
         text: string;
-    }, _RendererRepository: RendererRepository);
+    }, _RendererRepository?: RendererRepository);
     append(value: {
         text: string;
     }): void;

@@ -6,8 +6,9 @@ import { RendererRepository } from "../Renderer/RendererRepository" ;
 export default class extends Text {
   readonly type : string = "HEAD";
 
-  constructor(value: {text: string}, _RendererRepository: RendererRepository) {
+  constructor(value?: {text: string}, _RendererRepository?: RendererRepository) {
     super(value, _RendererRepository);
+    if (!value) return;
     this.reset();
 
     this.source = value.text;

@@ -5,8 +5,10 @@ import { RendererRepository } from "../Renderer/RendererRepository" ;
 export default class extends BaseModel implements IModel {
   readonly type: string = "BLOCK-Q";
 
-  constructor(value: {text: string}, _RendererRepository: RendererRepository) {
+  constructor(value?: {text: string}, _RendererRepository?: RendererRepository) {
     super(_RendererRepository);
+    if (!value) return;
+    
     this.source = value.text.replace(">", "");
     
     if (this.source.includes("::- ")) {

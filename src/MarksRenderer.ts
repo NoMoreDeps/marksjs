@@ -253,14 +253,29 @@ export class MarksRenderer implements IMarksRenderer {
       source: _.source
     })));*/
 
+    const processedElts = [] as TModel[];
+
     filteredElts.forEach(_ => {
+      if (_.options["mk-repeat"]) {
+        console.log("Trying to repeat");
+        const repeatSource = this.context[_.options["mk-repeat"]];
+        if (Array.isArray(repeatSource) && repeatSource.length > 0) {
+          repeatSource.forEach(rs => {
+            const childElt = _.clone();
+            childElt.process(rs);
+            processedElts.push(childElt);
+          });
+        }
+        return;
+      }
       _.process(this.context);
+      processedElts.push(_);
       //console.log(_.output);
     });
 
     const endTime = performance.now();
     const targetRenderer = target || document.createElement("div");
-    filteredElts.forEach(_ => _.domElement && targetRenderer.appendChild(_.domElement));
+    processedElts.forEach(_ => _.domElement && targetRenderer.appendChild(_.domElement));
     //console.log(`Processed in ${endTime - startTime} ms`);
 
     //console.log(noEmit, this.manualTrigger)
