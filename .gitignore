@@ -2,7 +2,7 @@ node_modules
 out
 dist
 !publish/**/dist
+!plugins/**/publish/**
 plugins/**/node_modules
 plugins/**/out
 plugins/**/dist
-!plugins/**/publish/**
