@@ -46,11 +46,11 @@ export function prepareNestedRef(r: IRenderingEnine) {
   const refRgx = /@@([\w\.]+)@@/g;
 
   let itm: RegExpExecArray | null = null;
-  console.log("context", r.context)
+  //console.log("context", r.context)
   let ct = r.content;
   while ((itm = refRgx.exec(r.content)) !== null ) {
     const id = itm[0].substr(2).replace("@@", "");
-    console.log(id)
+    //console.log(id)
     if (r?.context?.[id]) {
       ct = ct.replace(`@@${id}@@`, r.context[id]);
       continue;

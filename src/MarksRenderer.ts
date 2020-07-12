@@ -257,7 +257,7 @@ export class MarksRenderer implements IMarksRenderer {
 
     filteredElts.forEach(_ => {
       if (_.options["mk-repeat"]) {
-        console.log("Trying to repeat");
+        //console.log("Trying to repeat");
         const repeatSource = this.context[_.options["mk-repeat"]];
         if (Array.isArray(repeatSource) && repeatSource.length > 0) {
           repeatSource.forEach(rs => {
