@@ -1,6 +1,6 @@
 {
   "name": "@marks-js/mermaid",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "description": "Mermaid plugin for Marks rendering engine",
   "main": "index.js",
   "author": "NoMoreDeps",

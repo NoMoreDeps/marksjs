@@ -16,8 +16,6 @@ npm i -S @marks-js/mermaid
 yarn add @marks-js/mermaid
 ```
 
-___ ::- variant:dashed
-
 #### Adding it in the code
 
 ```typescript
@@ -31,7 +29,6 @@ renderer.registerRenderers(
   /* ... */
   );
 ```
-___ ::- variant:dashed
 
 #### From CDN for direct use
 
