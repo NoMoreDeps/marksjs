@@ -88,7 +88,7 @@ export class BlockTableRenderer implements IRenderingEnine {
 
       const headers   = tabs.shift()!.split(sep) ;
       const alignInfo = headers.map((_,i) => {
-        return this.options[`align_col${i + 1}`] ?? "left";
+        return this.options[`colAlign${i + 1}`] ?? "left";
       })
 
       let strTable = `
