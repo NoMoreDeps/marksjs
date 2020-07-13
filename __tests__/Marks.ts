@@ -1,5 +1,11 @@
 import { MarksRenderer, Plugins } from "../src/Index";
 
+function createRenderer() {
+  const r = new MarksRenderer();
+  r.registerRenderers(...Plugins.map(_ => new _()));
+  return r;
+}
+
 describe("Test dom", () => {
   it("Should be empty", () => {
     const r = new MarksRenderer();
@@ -182,5 +188,24 @@ describe("Unordered lists", () => {
   * Item 2.2
 * Item 3`);
     expect(elt.outerHTML).toBe(expectedNestedList);
+  });
+});
+
+describe("Heading", () => {
+  it("Should render Heading 1 to 6 with #", () => {
+    const r = createRenderer();
+    for(let i = 1; i <= 6; i++) {
+      const elt = r.render(' Heading'.padStart(i + ' Heading'.length, "#"));
+
+      expect(elt.outerHTML).toBe(`<div><h${i}> Heading</h${i}></div>`);
+    }
+  });
+  it("Should render Heading 1 to 6 with =", () => {
+    const r = createRenderer();
+    for(let i = 1; i <= 6; i++) {
+      const elt = r.render(`Heading
+${"".padStart(i , "=")}`);
+      expect(elt.outerHTML).toBe(`<div><h${i}> Heading</h${i}></div>`);
+    }
   });
 });
