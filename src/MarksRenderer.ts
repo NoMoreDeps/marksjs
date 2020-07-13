@@ -51,10 +51,10 @@ export class MarksRenderer implements IMarksRenderer {
     let lines = doc.replace(/\\r\\n/g, "\n").split("\n") ?? [];
 
     const an = [
+      { type: "LIST-O"  , rgx: /^\s*([0-9]+|#{1})\.\s(.*)/      , apply: ["-"]                      },
       { type: "HEAD"    , rgx: /^\s*#{1,6}(.*)/                 , apply: ["-"]                      },
       { type: "HEAD-B"  , rgx: /^\s*=+\s*/                      , apply: ["-"]                      },
       { type: "CHECK"   , rgx: /^\s*\-\s*\[[ x]\](.*)/          , apply: ["-"]                      },
-      { type: "LIST-O"  , rgx: /^\s*[0-9]+\.\s(.*)/             , apply: ["-"]                      },
       { type: "LIST-U"  , rgx: /^\s*[\*-]\s+(.*)/               , apply: ["-"]                      },
       { type: "TABLE"   , rgx: /^\s*\|(.*)\|\s*/                , apply: ["-"]                      },
       { type: "BLOCK-Q" , rgx: /^\s*\>(.*)/                     , apply: ["-"]                      },
