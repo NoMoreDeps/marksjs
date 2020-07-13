@@ -1,5 +1,11 @@
 import { MarksRenderer, Plugins } from "../src/Index";
 
+function createRenderer() {
+  const r = new MarksRenderer();
+  r.registerRenderers(...Plugins.map(_ => new _()));
+  return r;
+}
+
 describe("Test dom", () => {
   it("Should be empty", () => {
     const r = new MarksRenderer();
@@ -158,3 +164,120 @@ describe("Ordered lists", () => {
     expect(elt.outerHTML).toBe(expectedNestedListNoConflict);
   });
 });
+
+describe("Unordered lists", () => {
+  const expectedSimpleList =  "<div><p><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul></p></div>";
+  const expectedNestedList = "<div><p><ul><li>Item 1</li><li>Item 2<ul><li>Item 2.1<ul><li>Item 2.1.1</li></ul></li><li>Item 2.2</li></ul></li><li>Item 3</li></ul></p></div>";
+
+  it("Should render simple unordered list", () => {
+    const r = new MarksRenderer();
+    r.registerRenderers(...Plugins.map(_ => new _()));
+    const elt = r.render(`* Item 1
+* Item 2
+* Item 3`);
+    expect(elt.outerHTML).toBe(expectedSimpleList);
+  });
+
+  it("Should render nested unordered list", () => {
+    const r = new MarksRenderer();
+    r.registerRenderers(...Plugins.map(_ => new _()));
+    const elt = r.render(`* Item 1
+* Item 2
+  * Item 2.1
+    * Item 2.1.1
+  * Item 2.2
+* Item 3`);
+    expect(elt.outerHTML).toBe(expectedNestedList);
+  });
+});
+
+describe("Heading", () => {
+  it("Should render Heading 1 to 6 with #", () => {
+    const r = createRenderer();
+    for(let i = 1; i <= 6; i++) {
+      const elt = r.render(' Heading'.padStart(i + ' Heading'.length, "#"));
+
+      expect(elt.outerHTML).toBe(`<div><h${i}> Heading</h${i}></div>`);
+    }
+  });
+  it("Should render Heading 1 to 6 with =", () => {
+    const r = createRenderer();
+    for(let i = 1; i <= 6; i++) {
+      const elt = r.render(`Heading
+${"".padStart(i , "=")}`);
+      expect(elt.outerHTML).toBe(`<div><h${i}> Heading</h${i}></div>`);
+    }
+  });
+});
+
+describe("Blockquote", () => {
+  it("Should render inline quote", () => {
+    const expected = "<div><p><blockquote><div><p><span>This is a blockquote</span></p></div></blockquote></p></div>";
+    const r = createRenderer();
+
+    const elt = r.render('> This is a blockquote');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render multiline quote", () => {
+    const expected = "<div><p><blockquote><div><p><span>This is a multiline quotation.  <br>Now you know how to do !</span></p></div></blockquote></p></div>";
+    const r = createRenderer();
+
+    const elt = r.render(`> This is a multiline quotation.  
+> Now you know how to do !`);
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render emphasis inside blockquote", () => {
+    const expected = "<div><p><blockquote><div><p><span>This text can use <b>bold</b> or <em>italic</em>  <br>and so much <b><em><code>more</code></em></b>...</span></p></div></blockquote></p></div>";
+    const r = createRenderer();
+
+    const elt = r.render(`> This text can use **bold** or *italic*  
+> and so much ***\`more\`***...`);
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+});
+
+describe("Task", () => {
+  it("Should render todo task", () => {
+    const expected = "<div><p><ul><li style=\"list-style-type: none;\"><input type=\"checkbox\" style=\"margin-right: 5px;\"><span>Todo task</span></li></ul></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render('- [ ] Todo task');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render done task", () => {
+    const expected = "<div><p><ul><li style=\"list-style-type: none;\"><input type=\"checkbox\" checked=\"checked\" style=\"margin-right: 5px;\"><span>It is done</span></li></ul></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render('- [x] It is done');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render tasks", () => {
+    const expected = "<div><p><ul><li style=\"list-style-type: none;\"><input type=\"checkbox\" style=\"margin-right: 5px;\"><span>Todo 1</span></li><li style=\"list-style-type: none;\"><input type=\"checkbox\" checked=\"checked\" style=\"margin-right: 5px;\"><span>Done 1</span></li></ul></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render(`- [ ] Todo 1
+- [x] Done 1`);
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+})
+
+/**
+ it("Should render inline quote", () => {
+    const expected = "";
+    const r = createRenderer();
+    
+    const elt = r.render('');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+ */
