@@ -32,6 +32,12 @@ export class EscapeRenderer implements IRenderingEnine {
     if (this._succeeded) {
       return this.content.replace(rgx, "&#45;");
     }
+
+    rgx = /\\\./g;
+    this._succeeded = rgx.test(this.content);
+    if (this._succeeded) {
+      return this.content.replace(rgx, "&#46;");
+    }
     
     rgx = /\\`/g;
     this._succeeded = rgx.test(this.content);
