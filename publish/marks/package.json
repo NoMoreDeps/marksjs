@@ -1,6 +1,6 @@
 {
   "name": "@marks-js/marks",
-  "version": "1.0.73",
+  "version": "1.0.74",
   "license": "MIT",
   "main": "Index.js",
   "types": "Index.d.ts",
@@ -12,9 +12,12 @@
     "markup"
   ],
   "devDependencies": {
+    "@types/jest": "^26.0.4",
     "@types/node": "^12.12.17",
+    "jest": "^26.1.0",
     "npm-cli-login": "^0.1.1",
     "publish": "^0.6.0",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.5",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"
@@ -22,5 +25,8 @@
   "scripts": {
     "pk": "yarn tsc && yarn webpack --entry ./out/App.js  --output ./www/js/app.js"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "jest": {
+    "preset": "ts-jest"
+  }
 }
