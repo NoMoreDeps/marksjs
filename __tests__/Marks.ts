@@ -269,15 +269,78 @@ describe("Task", () => {
 
     expect(elt.outerHTML).toBe(expected);
   });
-})
+});
+
+describe("Table", () => {
+  it("Should render table", () => {
+    const expected = `<div><p><table>
+    <thead>
+      <tr>
+              <th align="left"> Tables        </th>
+        <th align="left"> Are           </th>
+        <th align="left"> Cool  </th>
+      </tr>
+    </thead><tbody>
+    
+      <tr>
+              <td align="left"> col 3 is      </td>
+        <td align="left"> right-aligned </td>
+        <td align="left"> $1600 </td>
+      </tr>
+
+      <tr>
+              <td align="left"> col 2 is      </td>
+        <td align="left"> <em>centered</em>    </td>
+        <td align="left">   $12 </td>
+      </tr>
+    </tbody>
+  </table></p></div>`;
+    const r = createRenderer();
+    
+    const elt = r.render(`| Tables        | Are           | Cool  |
+|---------------|---------------|-------|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | *centered*    |   $12 |`);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render with left / right align", () => {
+    const expected = `<div><p><table>
+    <thead>
+      <tr>
+              <th align="left">A</th>
+        <th align="right">B</th>
+        <th align="center">C</th>
+      </tr>
+    </thead><tbody>
+    
+      <tr>
+              <td align="left">X</td>
+        <td align="right">X</td>
+        <td align="center">X</td>
+      </tr>
+    </tbody>
+  </table></p></div>`;
+    const r = createRenderer();
+    
+    const elt = r.render(`|A|B|C|
+|--|--:|:--:|
+|X|X|X|`);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+});
 
 /**
- it("Should render inline quote", () => {
+describe("", () => {
+  it("Should ", () => {
     const expected = "";
     const r = createRenderer();
     
-    const elt = r.render('');
-
+    const elt = r.render(``);
+    
     expect(elt.outerHTML).toBe(expected);
   });
- */
+});
+  */
