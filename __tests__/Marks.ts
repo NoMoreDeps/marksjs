@@ -209,3 +209,45 @@ ${"".padStart(i , "=")}`);
     }
   });
 });
+
+describe("Blockquote", () => {
+  it("Should render inline quote", () => {
+    const expected = "<div><p><blockquote><div><p><span>This is a blockquote</span></p></div></blockquote></p></div>";
+    const r = createRenderer();
+
+    const elt = r.render('> This is a blockquote');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render multiline quote", () => {
+    const expected = "<div><p><blockquote><div><p><span>This is a multiline quotation.  <br>Now you know how to do !</span></p></div></blockquote></p></div>";
+    const r = createRenderer();
+
+    const elt = r.render(`> This is a multiline quotation.  
+> Now you know how to do !`);
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render emphasis inside blockquote", () => {
+    const expected = "<div><p><blockquote><div><p><span>This text can use <b>bold</b> or <em>italic</em>  <br>and so much <b><em><code>more</code></em></b>...</span></p></div></blockquote></p></div>";
+    const r = createRenderer();
+
+    const elt = r.render(`> This text can use **bold** or *italic*  
+> and so much ***\`more\`***...`);
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+});
+
+/**
+ it("Should render inline quote", () => {
+    const expected = "";
+    const r = createRenderer();
+    
+    const elt = r.render('');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+ */
