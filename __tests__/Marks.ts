@@ -241,6 +241,36 @@ describe("Blockquote", () => {
   });
 });
 
+describe("Task", () => {
+  it("Should render todo task", () => {
+    const expected = "<div><p><ul><li style=\"list-style-type: none;\"><input type=\"checkbox\" style=\"margin-right: 5px;\"><span>Todo task</span></li></ul></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render('- [ ] Todo task');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render done task", () => {
+    const expected = "<div><p><ul><li style=\"list-style-type: none;\"><input type=\"checkbox\" checked=\"checked\" style=\"margin-right: 5px;\"><span>It is done</span></li></ul></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render('- [x] It is done');
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render tasks", () => {
+    const expected = "<div><p><ul><li style=\"list-style-type: none;\"><input type=\"checkbox\" style=\"margin-right: 5px;\"><span>Todo 1</span></li><li style=\"list-style-type: none;\"><input type=\"checkbox\" checked=\"checked\" style=\"margin-right: 5px;\"><span>Done 1</span></li></ul></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render(`- [ ] Todo 1
+- [x] Done 1`);
+
+    expect(elt.outerHTML).toBe(expected);
+  });
+})
+
 /**
  it("Should render inline quote", () => {
     const expected = "";
