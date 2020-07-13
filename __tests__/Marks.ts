@@ -158,3 +158,29 @@ describe("Ordered lists", () => {
     expect(elt.outerHTML).toBe(expectedNestedListNoConflict);
   });
 });
+
+describe("Unordered lists", () => {
+  const expectedSimpleList =  "<div><p><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul></p></div>";
+  const expectedNestedList = "<div><p><ul><li>Item 1</li><li>Item 2<ul><li>Item 2.1<ul><li>Item 2.1.1</li></ul></li><li>Item 2.2</li></ul></li><li>Item 3</li></ul></p></div>";
+
+  it("Should render simple unordered list", () => {
+    const r = new MarksRenderer();
+    r.registerRenderers(...Plugins.map(_ => new _()));
+    const elt = r.render(`* Item 1
+* Item 2
+* Item 3`);
+    expect(elt.outerHTML).toBe(expectedSimpleList);
+  });
+
+  it("Should render nested unordered list", () => {
+    const r = new MarksRenderer();
+    r.registerRenderers(...Plugins.map(_ => new _()));
+    const elt = r.render(`* Item 1
+* Item 2
+  * Item 2.1
+    * Item 2.1.1
+  * Item 2.2
+* Item 3`);
+    expect(elt.outerHTML).toBe(expectedNestedList);
+  });
+});
