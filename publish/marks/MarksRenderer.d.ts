@@ -8,9 +8,25 @@ export declare class MarksRenderer implements IMarksRenderer {
     renderFinished?: () => void;
     manualTrigger: boolean;
     context: any;
+    /**
+     * Creates a new renderer instance
+     * @param repo The Renderer repository
+     */
     constructor(repo?: RendererRepository);
+    /**
+     * Clones the current renderer but keeps all configuration
+     */
     clone(): MarksRenderer;
+    /**
+     * Set the theme and styles
+     * @param themeStyles
+     */
     setThemeStyle(themeStyles: any): void;
+    /**
+     * Add more styles to the current renderer
+     * @param themeStyles
+     */
+    addThemeStyle(themeStyles: any): void;
     internalRender(source: string, noEmit?: boolean, target?: HTMLElement): HTMLElement;
     triggerRenderFinished(targetRenderer: HTMLElement): void;
     /**
@@ -19,6 +35,11 @@ export declare class MarksRenderer implements IMarksRenderer {
      * @param targetSelector Target dom element selector, if not specified, document.body will be used
      */
     renderFromHtmlNode(templateId: string, targetSelector?: string): void;
+    /**
+     * Render a Marks document to teh target or to a new Dom node
+     * @param template The template to parse
+     * @param target The target Dom node
+     */
     render(template: string, target?: HTMLElement): HTMLElement;
     /**
      * Register a new rendering plugin
