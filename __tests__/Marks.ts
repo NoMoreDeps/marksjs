@@ -332,6 +332,67 @@ describe("Table", () => {
   });
 });
 
+describe("Code block", () => {
+  it("Should render code block", () => {
+    const expected = "<div><p><pre><code>  Place some code here</code></pre></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render(`\`\`\`
+  Place some code here
+\`\`\``);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render code block with color", () => {
+    const expected = `<div><p><pre><code class="language-javascript">  class Hello {
+    sayHello() {
+      return "Hello Kitty";
+    }
+  }</code></pre></p></div>`;
+    const r = createRenderer();
+    
+    const elt = r.render(`\`\`\`javascript
+  class Hello {
+    sayHello() {
+      return "Hello Kitty";
+    }
+  }
+\`\`\``);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+});
+
+describe("Link / Image / Ruler", () => {
+  it("Should render Link", () => {
+    const expected = "<div><p><span><a href=\"https://wikipedia.com\" target=\"new\">Wikipedia</a></span></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render(`[Wikipedia](https://wikipedia.com "new")`);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render Image", () => {
+    const expected = "<div><p><span><img src=\"https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png\" alt=\"Wikipedia\" title=\"Wikipedia Logo\"></span></p></div>";
+    const r = createRenderer();
+    
+    const elt = r.render(`![Wikipedia](https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png "Wikipedia Logo")`);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+
+  it("Should render Ruler", () => {
+    const expected = "<div><hr></div>";
+    const r = createRenderer();
+    
+    const elt = r.render(`___`);
+    
+    expect(elt.outerHTML).toBe(expected);
+  });
+});
+
 /**
 describe("", () => {
   it("Should ", () => {
