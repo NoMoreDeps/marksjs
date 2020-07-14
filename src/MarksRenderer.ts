@@ -22,11 +22,18 @@ export class MarksRenderer implements IMarksRenderer {
   public manualTrigger     : boolean = false    ;
   public context           : any = {}           ;
 
+  /**
+   * Creates a new renderer instance
+   * @param repo The Renderer repository
+   */
   constructor(repo ?: RendererRepository) {
     this._rendererRepo = repo ?? new RendererRepository();
     this._globalRefs = {};
   }
 
+  /**
+   * Clones the current renderer but keeps all configuration
+   */
   clone() {
     const res = new MarksRenderer(this._rendererRepo.clone());
     res["_themeStyles"] = this._themeStyles;
@@ -36,9 +43,25 @@ export class MarksRenderer implements IMarksRenderer {
     return res;
   }
 
+  /**
+   * Set the theme and styles
+   * @param themeStyles 
+   */
   setThemeStyle(themeStyles: any) {
     this._themeStyles = themeStyles;
   }
+
+  /**
+   * Add more styles to the current renderer
+   * @param themeStyles 
+   */
+  addThemeStyle(themeStyles: any) {
+    this._themeStyles = {
+      ...this._themeStyles,
+      ...themeStyles
+    };
+  }
+
 
   internalRender(source: string, noEmit: boolean = true, target?: HTMLElement): HTMLElement {
     const doc = formatMinSpace(source).replace(/\r\n/g,"\n");
@@ -307,6 +330,11 @@ export class MarksRenderer implements IMarksRenderer {
     targetRenderer.appendChild(renderedDom);
   }
 
+  /**
+   * Render a Marks document to teh target or to a new Dom node
+   * @param template The template to parse
+   * @param target The target Dom node
+   */
   render(template: string, target?: HTMLElement): HTMLElement {
     return this.internalRender(template, false, target);
   }
