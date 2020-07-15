@@ -27,6 +27,12 @@ export declare class MarksRenderer implements IMarksRenderer {
      * @param themeStyles
      */
     addThemeStyle(themeStyles: any): void;
+    /**
+     * Used for internal render / nested renderer block
+     * @param source Template to render
+     * @param noEmit If true will not trigger the end rendering event
+     * @param target The Dom target node
+     */
     internalRender(source: string, noEmit?: boolean, target?: HTMLElement): HTMLElement;
     triggerRenderFinished(targetRenderer: HTMLElement): void;
     /**
@@ -40,7 +46,7 @@ export declare class MarksRenderer implements IMarksRenderer {
      * @param template The template to parse
      * @param target The target Dom node
      */
-    render(template: string, target?: HTMLElement): HTMLElement;
+    render(template: string, target?: HTMLElement | string): HTMLElement;
     /**
      * Register a new rendering plugin
      * @param plugin A rendering plugin to add

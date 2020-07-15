@@ -36,9 +36,9 @@ export class MarksRenderer implements IMarksRenderer {
    */
   clone() {
     const res = new MarksRenderer(this._rendererRepo.clone());
-    res["_themeStyles"] = this._themeStyles;
-    res["_globalRefs"] = this._globalRefs;
-    res["context"] = this.context;
+    res["_themeStyles"] = this._themeStyles ;
+    res["_globalRefs"]  = this._globalRefs  ;
+    res["context"]      = this.context      ;
     res["_rendererRepo"]["refs"].forEach(_ => _.cloneRenderer = this.clone.bind(this));
     return res;
   }
@@ -62,7 +62,12 @@ export class MarksRenderer implements IMarksRenderer {
     };
   }
 
-
+  /**
+   * Used for internal render / nested renderer block
+   * @param source Template to render
+   * @param noEmit If true will not trigger the end rendering event
+   * @param target The Dom target node
+   */
   internalRender(source: string, noEmit: boolean = true, target?: HTMLElement): HTMLElement {
     const doc = formatMinSpace(source).replace(/\r\n/g,"\n");
     this._rendererRepo["refs"].forEach(_ => {
@@ -335,8 +340,8 @@ export class MarksRenderer implements IMarksRenderer {
    * @param template The template to parse
    * @param target The target Dom node
    */
-  render(template: string, target?: HTMLElement): HTMLElement {
-    return this.internalRender(template, false, target);
+  render(template: string, target?: HTMLElement | string): HTMLElement {
+    return this.internalRender(template, false, typeof target === "string" ? document.querySelector<HTMLElement>(target)! : target);
   }
 
   /**

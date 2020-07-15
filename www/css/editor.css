@@ -1,0 +1,24 @@
+.mkEditor {
+  display         : flex    ;
+  flex-direction  : row     ;
+  justify-content : start   ;
+  align-items     : stretch ;
+
+  border: 1px solid black;
+}
+
+.mkEditor > div {
+  flex: 1;
+}
+
+.mkLeftMargin {
+  min-width: 55px;
+  max-width: 55px;
+  border-right: 1px dashed black;
+}
+
+.mkBody > div.block {
+  margin: 10px;
+  border: 1px dashed rgb(212, 212, 212);
+  padding: 5px;
+}

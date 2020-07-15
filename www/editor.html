@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/editor.css">
+  <script src="/js/Marks.dist.js"></script>
+</head>
+  <body>
+    <div class="mkEditor" style="width:500px; height:500px">
+      <div class="mkLeftMargin"></div>
+      <div class="mkBody">
+        <div class="block" id="mkb01">
+          asdasd aasdasd
+        </div>
+      </div>
+    </div>
+    <script>
+      const renderer = new Marks.MarksRenderer();
+      renderer.registerRenderers(
+      ...Marks.Plugins.map(_ => new _()),
+    );
+
+    renderer.render(`## Hello`, "#mkb01")
+    </script>
+  </body>
+</html> 
