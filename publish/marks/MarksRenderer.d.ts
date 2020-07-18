@@ -44,7 +44,7 @@ export declare class MarksRenderer implements IMarksRenderer {
      * @param targetSelector Target dom element selector, if not specified, document.body will be used
      */
     renderFromHtmlNode(templateId: string, targetSelector?: string): void;
-    renderToText(template: string): string;
+    renderToText(template: string, indentLevel?: number): string;
     /**
      * Render a Marks document to teh target or to a new Dom node
      * @param template The template to parse
