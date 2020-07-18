@@ -4,7 +4,7 @@
   justify-content : start   ;
   align-items     : stretch ;
 
-  border: 1px solid black;
+  border: 1px solid #d4d4d4;
 }
 
 .mkEditor > div {
@@ -14,11 +14,39 @@
 .mkLeftMargin {
   min-width: 55px;
   max-width: 55px;
-  border-right: 1px dashed black;
+  border-right: 1px dashed #ececec;
 }
 
 .mkBody > div.block {
   margin: 10px;
-  border: 1px dashed rgb(212, 212, 212);
+  border: 1px dashed transparent;
   padding: 5px;
+}
+
+.mkBody > div.block:hover{
+  margin: 10px;
+  border: 1px dashed #ececec;
+  padding: 5px;
+}
+
+.mkBody > div.active {
+  border: 1px dashed #d4d4d4;
+}
+
+#mkb03 > .preview {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border: 1px dashed #d4d4d4;
+  margin-left: -45px;
+}
+
+#mkb03 > .cog {
+  margin-top: 30px;
+}
+
+#mkb03 > .puzzle {
+  margin-top: 60px;
 }

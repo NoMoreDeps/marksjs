@@ -1,6 +1,6 @@
 {
   "name": "@marks-js/marks",
-  "version": "1.0.80",
+  "version": "1.0.82",
   "license": "MIT",
   "main": "Index.js",
   "types": "Index.d.ts",
