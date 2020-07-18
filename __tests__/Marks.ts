@@ -10,7 +10,7 @@ function testHtmlAndTextWithSnapshot(r: MarksRenderer, template: string) {
   let elt = r.render(template);
   expect(elt.outerHTML).toMatchSnapshot(template);
   let eltStr = r.renderToText(template, -1);
-  expect(eltStr).toMatchSnapshot(template);
+  expect(eltStr).toBe(elt.outerHTML);
 }
 
 describe("Test dom", () => {
@@ -18,8 +18,7 @@ describe("Test dom", () => {
     const r = new MarksRenderer();
     r.registerRenderers(...Plugins.map(_ => new _()));
 
-    const elt = r.render(``);
-    expect(elt.outerHTML).toMatchSnapshot();
+    testHtmlAndTextWithSnapshot(r, ``);
   });
 })
 
@@ -64,7 +63,7 @@ describe("Emphasis", () => {
   it("Should render Bold & Italic", () => {
     const r = new MarksRenderer();
     r.registerRenderers(...Plugins.map(_ => new _()));
-    testHtmlAndTextWithSnapshot(r, `This is __*Bold & Italic*__`);
+    testHtmlAndTextWithSnapshot(r, `This is __*Bold &amp; Italic*__`);
   });
 
   it("Should render multiline emphasis", () => {
