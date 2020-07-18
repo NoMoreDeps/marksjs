@@ -1,6 +1,8 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
 import { applyStyle, prepareInternals, processInternals }                    from "./Helper"                          ;
+import { IDocument } from "../../Interfaces/IDocument";
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 
 export class CheckRenderer implements IRenderingEnine {
   themeStyles       !: any                               ;
@@ -8,14 +10,17 @@ export class CheckRenderer implements IRenderingEnine {
   private _succeeded : boolean               = false     ;
   public applyTo     : string[]              = ["CHECK"] ;
   public options     : TRenderingOption      = {}        ;       
-  public domContent  : HTMLElement | null    = null      ;
+  public domContent  : IVDom_Element | null    = null      ;
   public content     : string                = ""        ;
   public type        : string                = ""        ;
   public weight      : number                = 0         ;
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+
     prepareInternals(this);
-    this.domContent = document.createElement(this.options?.ordered ? "ol" : "ul");
+    this.domContent = this.document.createElement(this.options?.ordered ? "ol" : "ul");
 
     const checkRgx = /\s*(?<type>[\-0-9]\.?)\s*(?<check>\[[ x]\])\s*(?<text>.*)\s*/;
     const list = this.content
@@ -30,22 +35,22 @@ export class CheckRenderer implements IRenderingEnine {
         }
       })
       .forEach(_ => {
-        const li      = document.createElement("li")    ;
-        const domType = document.createElement("input") ;
+        const li      = this.document.createElement("li")    ;
+        const domType = this.document.createElement("input") ;
 
         domType.setAttribute("type", "checkbox");
         _.check?.toLowerCase() === "[x]" && (domType.setAttribute("checked", "checked"));
 
-        domType.onclick           = () => false ;
-        domType.style.marginRight = "5px"       ;
+        domType.setAttribute("onclick", `() => false`);
+        domType.setStyle("margin-right", "5px");
 
         li.appendChild(domType);
 
-        const text     = document.createElement("span") ;
-        text.innerHTML = _.text                         ;
+        const text     = this.document.createElement("span") ;
+        text.setInnerHTML(_.text);
 
         li.appendChild(text);
-        !!!this.options?.bullet && (li.style.listStyleType = "none");
+        !!!this.options?.bullet && (li.setStyle("list-style-type" ,"none"));
         this.domContent?.appendChild(li);
       })
 

@@ -13,14 +13,18 @@ import { TModel }             from "./Models/BaseModel"            ;
 import BlockQ                 from "./Models/BlockQ"               ;
 import { IMarksRenderer }     from "./Interfaces/IMarksRenderer"   ;
 import { formatMinSpace }     from "./Renderer/Plugins/Helper"     ;
+import { Document }           from "./VDom/Html/Document"          ;
+import { VDom_Element }       from "./VDom/Html/VDom_Element"      ;
+import { IVDom_Element } from "./Interfaces/IVDom_Element";
 
 export class MarksRenderer implements IMarksRenderer {
-  protected _rendererRepo  : RendererRepository ;
-  protected _globalRefs    : any                ;
-  protected _themeStyles   : any                ;
-  public renderFinished   ?: () => void         ;
-  public manualTrigger     : boolean = false    ;
-  public context           : any = {}           ;
+  protected _rendererRepo  : RendererRepository     ;
+  protected _globalRefs    : any                    ;
+  protected _themeStyles   : any                    ;
+  public renderFinished   ?: () => void             ;
+  public manualTrigger     : boolean = false        ;
+  public context           : any = {}               ;
+  public targetRender      : "Dom" | "Text" = "Dom" ;
 
   /**
    * Creates a new renderer instance
@@ -39,7 +43,10 @@ export class MarksRenderer implements IMarksRenderer {
     res["_themeStyles"] = this._themeStyles ;
     res["_globalRefs"]  = this._globalRefs  ;
     res["context"]      = this.context      ;
-    res["_rendererRepo"]["refs"].forEach(_ => _.cloneRenderer = this.clone.bind(this));
+    res["_rendererRepo"]["refs"].forEach(_ => {
+      _.cloneRenderer = this.clone.bind(this);
+      _.getDocument = () => new Document(this.targetRender);
+    });
     return res;
   }
 
@@ -68,7 +75,7 @@ export class MarksRenderer implements IMarksRenderer {
    * @param noEmit If true will not trigger the end rendering event
    * @param target The Dom target node
    */
-  internalRender(source: string, noEmit: boolean = true, target?: HTMLElement): HTMLElement {
+  internalRender(source: string, noEmit: boolean = true, target?: VDom_Element): VDom_Element {
     const doc = formatMinSpace(source).replace(/\r\n/g,"\n");
     this._rendererRepo["refs"].forEach(_ => {
       _.globalRefs  = this._globalRefs;
@@ -301,6 +308,8 @@ export class MarksRenderer implements IMarksRenderer {
       //console.log(_.output);
     });
 
+    const document = new Document(this.targetRender);
+
     const endTime = performance.now();
     const targetRenderer = target || document.createElement("div");
     processedElts.forEach(_ => _.domElement && targetRenderer.appendChild(_.domElement));
@@ -310,10 +319,10 @@ export class MarksRenderer implements IMarksRenderer {
     if (!noEmit && !this.manualTrigger) {
       this.triggerRenderFinished(targetRenderer);
     }
-    return targetRenderer;
+    return targetRenderer as VDom_Element;
   }
 
-  triggerRenderFinished(targetRenderer: HTMLElement) {
+  triggerRenderFinished(targetRenderer: IVDom_Element) {
     this._rendererRepo["refs"].forEach(_ => _.renderFinished?.(targetRenderer))
     this.renderFinished?.();
   }
@@ -324,6 +333,8 @@ export class MarksRenderer implements IMarksRenderer {
    * @param targetSelector Target dom element selector, if not specified, document.body will be used
    */
   renderFromHtmlNode(templateId: string, targetSelector ?: string) {
+    const _document = new Document(this.targetRender);
+
     let doc = document.querySelector<HTMLTemplateElement>(templateId)?.innerHTML ?? "";
     var textDecoder = document.createElement("textarea");
     textDecoder.innerHTML = doc;
@@ -331,8 +342,12 @@ export class MarksRenderer implements IMarksRenderer {
 
     const renderedDom = this.internalRender(doc, false);
 
-    const targetRenderer = document.querySelector(targetSelector ?? "body") ?? document.body;
-    targetRenderer.appendChild(renderedDom);
+    const targetRenderer = document.querySelector<HTMLElement>(targetSelector ?? "body") ?? document.body;
+    targetRenderer.appendChild(renderedDom.toDom()!);
+  }
+
+  renderToText(template: string, indentLevel: number = 2) {
+    return this.internalRender(template, false).toHtml(indentLevel)
   }
 
   /**
@@ -341,7 +356,11 @@ export class MarksRenderer implements IMarksRenderer {
    * @param target The target Dom node
    */
   render(template: string, target?: HTMLElement | string): HTMLElement {
-    return this.internalRender(template, false, typeof target === "string" ? document.querySelector<HTMLElement>(target)! : target);
+    const res = this.internalRender(template, false);
+    if (target) {
+      (typeof target === "string" ? document.querySelector<HTMLElement>(target)! : target).appendChild(res.toDom()!);
+    }
+    return res.toDom()!;
   }
 
   /**
@@ -352,6 +371,7 @@ export class MarksRenderer implements IMarksRenderer {
     // Used if the plugin needs to render Marks recur
     plugins.forEach(plugin => {
       plugin.cloneRenderer = this.clone.bind(this);
+      plugin.getDocument = () => new Document(this.targetRender);
       plugin.willInit?.();
       this._rendererRepo.register(plugin);
     });

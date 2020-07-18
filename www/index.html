@@ -63,7 +63,7 @@ blockquote > div {
   </style>
 </head>
 <body>
-  <template id="MD_TMPj">
+  <template id="MD_TMP">
 #### Marks features
 Marks is a markup language that aims to keep what is great with Markdown, but with 
 simple addition that allows it to be extended in a very simpler way.
@@ -100,7 +100,7 @@ ____ ::- variant:dashed
 
 To create a heading, add number signs `#` in front of a word or phrase. The number of number signs you use should correspond to the heading level, from 1 to 6
 
-[table format:csv variant:bordered,headDark nested] {{
+[table format:csv separator:; variant:bordered,headDark nested] {{
 Markdown;Marks;Output
 @@RMD@@ ; @@RMK@@ ; @@RRO@@
 }}
@@ -147,7 +147,7 @@ Heading 6
 
 Alternatively, on the line below the text, add any number of = from 1 to 6
 
-[table format:csv variant:bordered,headDark nested] {{
+[table format:csv separator:; variant:bordered,headDark nested] {{
 Markdown;Marks;Output
 @@RMD@@ ; @@RMK@@ ; @@RRO@@
 @@RMD2@@ ; Not supported ; ---
@@ -181,7 +181,7 @@ all of my documents from now on.
 
 To create paragraphs, use a blank line to separate one or more lines of text.
 
-[table format:csv variant:bordered,headDark nested] {{
+[table format:csv separator:; variant:bordered,headDark nested] {{
 Markdown;Marks;Output
 @@RMD@@ ; @@RMK@@ ; @@RRO@@
 }}
@@ -203,9 +203,9 @@ And this is the second line.
 
 ##### Line Breaks
 
-To create a line break (&lt;br&gt;), end a line with two or more spaces, and then a line feed.
+To create a line break (\<br\>), end a line with two or more spaces, and then a line feed.
 
-[table format:csv variant:bordered,headDark nested] {{
+[table format:csv separator:; variant:bordered,headDark nested] {{
 Markdown;Marks;Output
 @@RMD@@ ; @@RMK@@ ; @@RRO@@
 }}
@@ -214,7 +214,7 @@ Markdown;Marks;Output
 
 You can provide some `Emphasis` to part of the text as describe in the following table.
 
-[table format:csv variant:bordered,headDark separator:| emp] {{
+[table format:csv foseparator:; variant:bordered,headDark separator:| emp] {{
 type|Markdown|Marks|Output
 `Italic`|\*Word\*|\*Word\*|*Word*
 `Italic`|\_Word\_|\_Word\_|_Word_
@@ -335,7 +335,7 @@ An unordered list can only be defined by an asterisk `*`, and an ordered list by
 - [x] Markdown ::- noBullet
 - [x] Marks
 
-[table format:csv variant:bordered,headDark nested] {{
+[table format:csv separator:; variant:bordered,headDark nested] {{
 Marks;Output;Marks;Output
 @@RMK@@ ; @@RRO@@ ; @@RMK2@@ ; @@RRO2@@
 }}
@@ -375,7 +375,7 @@ Marks;Output;Marks;Output
 - [x] Markdown ::- noBullet
 - [x] Marks
 
-[table format:csv variant:bordered,headDark nested] {{
+[table format:csv separator:; variant:bordered,headDark nested] {{
 Marks;Output;Marks;Output
 @@RMK@@ ; @@RRO@@ ; @@RMK2@@ ; @@RRO2@@
 }}
@@ -506,7 +506,7 @@ The first way to set options is to add a specific separator at the end of the fi
 
 Options will differ per themes / plugins, but 3 shared params exists to style components.
 
-[table format:csv variant:small,bordered,headDark emp] {{
+[table format:csv foseparator:; variant:small,bordered,headDark emp] {{
 OptionName;OptionType;Effect
 **theme**;`string`;*Used to apply a specific theme to a component*
 }}
@@ -525,7 +525,7 @@ This is the default rendering of the table with Bootstrap theme
 | col 2 is      | *centered*    |   $12 |
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Marks;rendered
 @@RMK@@;@@RMK2@@
 }}
@@ -544,12 +544,12 @@ And now the same with the dark theme applied
 | col 2 is      | *centered*    |   $12 |
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Marks;rendered
 @@RMK@@;@@RMK2@@
 }}
 
-[table format:csv variant:small,bordered,headDark emp] {{
+[table format:csv separator:; variant:small,bordered,headDark emp] {{
 OptionName;OptionType;Effect
 **variant**;`string`;*Used to apply a specific variant to a component*
 }}
@@ -574,7 +574,7 @@ Text with primary background
 Text with info background
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Marks;rendered
 @@RMK@@;@@RMK2@@
 }}
@@ -599,7 +599,7 @@ Text with primary background ::- variant:bgPrimary
 Text with info background ::- variant:bginfo
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Marks;rendered
 @@RMK@@;@@RMK2@@
 }}
@@ -626,7 +626,7 @@ This is the rendering of the text with Bootstrap theme without align option
   remaining essentially unchanged. 
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Marks;rendered
 @@RMK@@;@@RMK2@@
 }}
@@ -655,7 +655,7 @@ Now the same with text justify
   remaining essentially unchanged. 
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Marks;rendered
 @@RMK@@;@@RMK2@@
 }}
@@ -691,7 +691,7 @@ ___ ::- variant:dashed
 - [x] Done !!
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Default;With option
 @@RMK@@;@@RMK2@@
 }}
@@ -723,7 +723,7 @@ A Bootstrap specific one.
   "title" : "My avatar"
 }}
 
-[table format:csv variant:bordered nested] {{
+[table format:csv separator:; variant:bordered nested] {{
 Definition;Rendered
 @@RMK@@;@@RMK2@@
 @@RMK3@@;@@RMK4@@
@@ -825,7 +825,7 @@ sequenceDiagram
 }}
   </template>
 
-  <template id="MD_TMP">
+  <template id="MD_TMPs">
 [bs-carousel]{{
    
 }}
@@ -839,8 +839,8 @@ sequenceDiagram
     const mermaidPlugin = new Marks_Mermaid.BlockMermaidRenderer();
     renderer.registerRenderers(
       ...Marks.Plugins.map(_ => new _()),
-      mermaidPlugin,
-      ...Marks_Bootstrap.BsPlugins.map(_ => new _())
+      //mermaidPlugin,
+      //...Marks_Bootstrap.BsPlugins.map(_ => new _())
     );
 
     renderer.context = {

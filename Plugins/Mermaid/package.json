@@ -6,7 +6,7 @@
   "author": "NoMoreDeps",
   "license": "MIT",
   "devDependencies": {
-    "@marks-js/marks": "^1.0.59",
+    "@marks-js/marks": "^1.0.82",
     "typescript": "^3.9.6",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"

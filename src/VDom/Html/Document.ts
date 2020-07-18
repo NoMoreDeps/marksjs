@@ -1,25 +1,28 @@
-import {V_HTMLElement} from "./HTMLElement";
+import {VDom_Element}    from "./VDom_Element"                 ;
+import { IVDom_Element } from "../../Interfaces/IVDom_Element" ;
+import { IDocument }     from "../../Interfaces/IDocument"     ;
 
-export class Document {
-  private _root!: V_HTMLElement;
+export class Document implements IDocument {
+  private _root!: IVDom_Element;
 
   constructor(private target: "Dom" | "Text") {
-    this._root = new V_HTMLElement(this, "div", target);
+    this._root = new VDom_Element(this, "div", target);
   }
 
   get root() {
     return this._root;
   }
 
-  findFirst(predicate: (elt: V_HTMLElement) => boolean, deepLevel: number = -1) {
+  findFirst(predicate: (elt: IVDom_Element) => boolean, deepLevel: number = -1) {
     return this.root.findFirst(predicate, deepLevel); 
   }
 
-  findAll(predicate: (elt: V_HTMLElement) => boolean, deepLevel: number = -1) {
-    return (this.root as V_HTMLElement).findAll(predicate, deepLevel);
+  findAll(predicate: (elt: IVDom_Element) => boolean, deepLevel: number = -1) {
+    return (this.root as IVDom_Element).findAll(predicate, deepLevel);
   }
 
-  createElement(tagName: string, textContent?: string): V_HTMLElement {
-    return new V_HTMLElement(this, tagName, this.target, textContent);
+  createElement(tagName: string, textContent?: string): IVDom_Element {
+    return new VDom_Element(this, tagName, this.target, textContent);
   }
 }
+

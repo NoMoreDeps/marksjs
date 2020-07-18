@@ -1,6 +1,8 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
 import { applyStyle, prepareInternals, processNestedRef, processRef }                    from "./Helper"                          ;
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { IDocument } from "../../Interfaces/IDocument";
 
 type TTableRenderingoptions = TRenderingOption & {
   format    ?: "markdown" | "csv";
@@ -13,12 +15,14 @@ export class TableRenderer implements IRenderingEnine {
   private _succeeded : boolean                = false     ;
   public applyTo     : string[]               = ["TABLE"] ;
   public options     : TTableRenderingoptions = {}        ;       
-  public domContent  : HTMLElement | null     = null      ;
+  public domContent  : IVDom_Element | null     = null      ;
   public content     : string                 = ""        ;
   public type        : string                 = ""        ;
   public weight      : number                 = 0         ;
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
     this._succeeded = false;
     
    prepareInternals(this);
@@ -55,6 +59,7 @@ export class TableRenderer implements IRenderingEnine {
         }).join("\n")
       }
       </tr>
+    </thead>
     <tbody>
     ${tabs.map(row => `
       <tr>
@@ -69,13 +74,13 @@ export class TableRenderer implements IRenderingEnine {
   </table>
     `;
 
-    this.domContent = document.createElement("div");
-    this.domContent.innerHTML = strTable;
+    this.domContent = this.document.createElement("div");
+    this.domContent.setInnerHTML(strTable);
 
-    if (this.domContent?.querySelector("table")) {
-      this.domContent = this.domContent?.querySelector("table");
+    if (this.domContent?.findFirst(_ => _.tagName === "table")) {
+      this.domContent = this.domContent?.findFirst(_ => _.tagName === "table");
       applyStyle(this, "table");
-      if (this.options.width) this.domContent!.style.width=this.options.width;
+      if (this.options.width) this.domContent!.setStyle("width", this.options.width);
     }
 
     processNestedRef(this);

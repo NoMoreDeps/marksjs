@@ -1,5 +1,6 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine";
 import { TRenderingOption } from "../../Interfaces/IRenderingOption";
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 export declare class EscapeRenderer implements IRenderingEnine {
     globalRefs: any;
     themeStyles: any;
@@ -7,7 +8,7 @@ export declare class EscapeRenderer implements IRenderingEnine {
     applyTo: string[];
     options: TRenderingOption;
     content: string;
-    domContent: HTMLElement | null;
+    domContent: IVDom_Element | null;
     type: string;
     weight: number;
     render(): string;

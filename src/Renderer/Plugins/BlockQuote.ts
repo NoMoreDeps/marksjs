@@ -2,6 +2,8 @@ import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
 import { applyStyle, prepareInternals, processInternals }                    from "./Helper"                          ;
 import { MarksRenderer }                 from "../../MarksRenderer"               ;
+import { IDocument } from "../../Interfaces/IDocument";
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 
 export class BlockQRenderer implements IRenderingEnine {
   globalRefs            : any                                 ;
@@ -9,18 +11,21 @@ export class BlockQRenderer implements IRenderingEnine {
   private _succeeded    : boolean               = false       ;
   public applyTo        : string[]              = ["BLOCK-Q"] ;
   public options        : TRenderingOption      = {}          ;       
-  public domContent     : HTMLElement | null    = null        ;
+  public domContent     : IVDom_Element | null    = null        ;
   public content        : string                = ""          ;
   public type           : string                = ""          ;
   public weight         : number                = 0           ;
   public cloneRenderer ?: () => MarksRenderer                 ;
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+    
     this._succeeded = false;
 
     prepareInternals(this);
     
-    this.domContent = document.createElement("blockquote");
+    this.domContent = this.document.createElement("blockquote");
 
     const renderer = this.cloneRenderer?.();
     if (renderer) {

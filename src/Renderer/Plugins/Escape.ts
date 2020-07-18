@@ -1,5 +1,6 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 
 export class EscapeRenderer implements IRenderingEnine {
   globalRefs : any                                                                                         ;
@@ -8,7 +9,7 @@ export class EscapeRenderer implements IRenderingEnine {
   public applyTo    : string[]           = ["HEAD", "TEXT", "TABLE", "LIST-O", "LIST-U", "CHECK", "BLOCK"] ;
   public options    : TRenderingOption   = {}                                                              ;
   public content    : string             = ""                                                              ;
-  public domContent : HTMLElement | null = null                                                            ;
+  public domContent : IVDom_Element | null = null                                                            ;
   public type       : string             = ""                                                              ;
   public weight      : number            = 150                                                             ;
 
@@ -62,6 +63,20 @@ export class EscapeRenderer implements IRenderingEnine {
     if (this._succeeded) {
       return this.content.replace(rgx, "&#126;");
     }
+
+    rgx = /\\\</g;
+    this._succeeded = rgx.test(this.content);
+    if (this._succeeded) {
+      return this.content.replace(rgx, "&lt;");
+    }
+
+
+    rgx = /\\\>/g;
+    this._succeeded = rgx.test(this.content);
+    if (this._succeeded) {
+      return this.content.replace(rgx, "&gt;");
+    }
+
 
   
 

@@ -1,6 +1,8 @@
-import { IRenderingEnine }  from "../../Interfaces/IRenderingEngine" ;
-import { TRenderingOption } from "../../Interfaces/IRenderingOption" ;
-import { applyStyle, processRef, loadScript, loadAssets, waitAsync }       from "./Helper"                          ;
+import { IRenderingEnine }                                           from "../../Interfaces/IRenderingEngine" ;
+import { TRenderingOption }                                          from "../../Interfaces/IRenderingOption" ;
+import { applyStyle, processRef, loadScript, loadAssets, waitAsync } from "./Helper"                          ;
+import { IVDom_Element }                                             from "../../Interfaces/IVDom_Element"    ;
+import { IDocument }                                                 from "../../Interfaces/IDocument"        ;
 
 let hasBeenInit = false;
 declare var Prism: any;
@@ -11,14 +13,16 @@ export class CodeRenderer implements IRenderingEnine {
   private _succeeded  : boolean               = false                                          ;
   public applyTo      : string[]              = ["CODE"]                                       ;
   public options      : TRenderingOption      = {}                                             ;
-  public domContent   : HTMLElement | null    = null                                           ;
+  public domContent   : IVDom_Element | null    = null                                           ;
   public content      : string                = ""                                             ;
   public type         : string                = ""                                             ;
   public weight       : number                = 0                                              ;
   private _version    : string                = "1.20.0"                                       ;
   private _serverPath : string                = "https://cdnjs.cloudflare.com/ajax/libs/prism" ;
   private _depName    : string                = "marks_prism_dep";
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
+  
   constructor({skipInit, version, serverPath}: {skipInit?: boolean, version?: string, serverPath?: string} = {skipInit: false}){
     hasBeenInit      = !!skipInit                     ;
     this._version    = version ?? this._version       ;
@@ -26,11 +30,12 @@ export class CodeRenderer implements IRenderingEnine {
   }
 
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
     this._succeeded = false                          ;
-    const code      = document.createElement("code") ;
-    this.domContent = document.createElement("pre")  ;
+    const code      = this.document.createElement("code") ;
+    this.domContent = this.document.createElement("pre")  ;
 
-    code.appendChild(document.createTextNode(this.content));
+    code.appendChild(this.document.createElement("text",this.content));
     this.domContent.appendChild(code);
     applyStyle(this, "code");
 
@@ -57,7 +62,7 @@ export class CodeRenderer implements IRenderingEnine {
     this.options = options ;
   }
 
-  async renderFinished(targetElement: HTMLElement | undefined) {
+  async renderFinished(targetElement: IVDom_Element | undefined) {
     if (!hasBeenInit) {
       hasBeenInit  = true  ;
       

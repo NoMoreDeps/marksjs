@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Emphasis Should render Bold & Italic: This is __*Bold & Italic*__ 1`] = `"<div><p><span><span>This is </span><b><em><span>Bold &amp; Italic</span></em></b></span></p></div>"`;
+
+exports[`Emphasis Should render Bold & Italic: This is __*Bold & Italic*__ 2`] = `"<div><p><span><span>This is </span><b><em><span>Bold & Italic</span></em></b></span></p></div>"`;
+
+exports[`Emphasis Should render bold: This is **Bold** 1`] = `"<div><p><span><span>This is </span><b><span>Bold</span></b></span></p></div>"`;
+
+exports[`Emphasis Should render bold: This is **Bold** 2`] = `"<div><p><span><span>This is </span><b><span>Bold</span></b></span></p></div>"`;
+
+exports[`Emphasis Should render bold: This is __Bold__ 1`] = `"<div><p><span><span>This is </span><b><span>Bold</span></b></span></p></div>"`;
+
+exports[`Emphasis Should render bold: This is __Bold__ 2`] = `"<div><p><span><span>This is </span><b><span>Bold</span></b></span></p></div>"`;
+
+exports[`Emphasis Should render inline quote: This is \`inline quote\` 1`] = `"<div><p><span><span>This is </span><code><span>inline quote</span></code></span></p></div>"`;
+
+exports[`Emphasis Should render inline quote: This is \`inline quote\` 2`] = `"<div><p><span><span>This is </span><code><span>inline quote</span></code></span></p></div>"`;
+
+exports[`Emphasis Should render italic: This is *Italic* 1`] = `"<div><p><span><span>This is </span><em><span>Italic</span></em></span></p></div>"`;
+
+exports[`Emphasis Should render italic: This is *Italic* 2`] = `"<div><p><span><span>This is </span><em><span>Italic</span></em></span></p></div>"`;
+
+exports[`Emphasis Should render italic: This is _Italic_ 1`] = `"<div><p><span><span>This is </span><em><span>Italic</span></em></span></p></div>"`;
+
+exports[`Emphasis Should render italic: This is _Italic_ 2`] = `"<div><p><span><span>This is </span><em><span>Italic</span></em></span></p></div>"`;
+
+exports[`Emphasis Should render multiline emphasis: This is *Italic*  
+    This is **Bold**  
+    This is ~underline~  
+    This is ~stroke~  
+    This is \`inline quote\` 1`] = `"<div><p><span><span>This is </span><em><span>Italic</span></em><br><span>    This is </span><b><span>Bold</span></b><br><span>    This is </span><span style=\\"text-decoration: underline\\"><span>underline</span></span><br><span>    This is </span><span style=\\"text-decoration: underline\\"><span>stroke</span></span><br><span>    This is </span><code><span>inline quote</span></code></span></p></div>"`;
+
+exports[`Emphasis Should render multiline emphasis: This is *Italic*  
+    This is **Bold**  
+    This is ~underline~  
+    This is ~stroke~  
+    This is \`inline quote\` 2`] = `"<div><p><span><span>This is </span><em><span>Italic</span></em><br><span>    This is </span><b><span>Bold</span></b><br><span>    This is </span><span style=\\"text-decoration: underline\\"><span>underline</span></span><br><span>    This is </span><span style=\\"text-decoration: underline\\"><span>stroke</span></span><br><span>    This is </span><code><span>inline quote</span></code></span></p></div>"`;
+
+exports[`Emphasis Should render stroke: This is ~~stroke~~ 1`] = `"<div><p><span><span>This is </span><span style=\\"text-decoration: line-through\\"><span>stroke</span></span></span></p></div>"`;
+
+exports[`Emphasis Should render stroke: This is ~~stroke~~ 2`] = `"<div><p><span><span>This is </span><span style=\\"text-decoration: line-through\\"><span>stroke</span></span></span></p></div>"`;
+
+exports[`Emphasis Should render underline: This is ~underline~ 1`] = `"<div><p><span><span>This is </span><span style=\\"text-decoration: underline\\"><span>underline</span></span></span></p></div>"`;
+
+exports[`Emphasis Should render underline: This is ~underline~ 2`] = `"<div><p><span><span>This is </span><span style=\\"text-decoration: underline\\"><span>underline</span></span></span></p></div>"`;
+
+exports[`Test dom Should be empty 1`] = `"<div><p></p></div>"`;

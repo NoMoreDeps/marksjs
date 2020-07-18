@@ -1,5 +1,7 @@
 import { TRenderingOption } from "./IRenderingOption";
 import { IMarksRenderer } from "./IMarksRenderer";
+import { IVDom_Element } from "./IVDom_Element";
+import { IDocument } from "./IDocument";
 export interface IRenderingEnine {
     globalRefs: any;
     themeStyles: any;
@@ -7,8 +9,9 @@ export interface IRenderingEnine {
     applyTo: Array<string>;
     options: TRenderingOption;
     content: string;
-    domContent: HTMLElement | null;
+    domContent: IVDom_Element | null;
     cloneRenderer?: () => IMarksRenderer;
+    getDocument?: () => IDocument;
     context?: any;
     render: () => string;
     canProcess: () => boolean;
@@ -22,5 +25,5 @@ export interface IRenderingEnine {
     /**
      * This method is called if defined when a render has been done
      */
-    renderFinished?: (mountingPoint: HTMLElement) => void;
+    renderFinished?: (mountingPoint: IVDom_Element) => void;
 }

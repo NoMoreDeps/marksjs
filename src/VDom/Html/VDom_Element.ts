@@ -1,17 +1,29 @@
 import { HtmlParser, Node, NODE_TYPE } from "../Parser/Index" ;
-import { Document }   from "./Document"      ;
+import { Document }                    from "./Document"      ;
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 
-export class V_HTMLElement {
-  private dom         ?: HTMLElement                    ;
-  private childNodes   : V_HTMLElement[] = []           ;
+export class VDom_Element implements IVDom_Element{
+  dom                 ?: HTMLElement                    ;
+  private childNodes   : IVDom_Element[] = []           ;
   private _classList   : string[] = []                  ;
   private _attributes  : { [key: string]: any } = {}    ;
   private _styles      : { [key: string]: string } = {} ;
   private _style       : string = ""                    ;
 
+  get id(): string {
+    return this.getAttribute("id");
+  }
+
+  get childElementCount() : number {
+    return this.childNodes.length;
+  }
+
   constructor(private _doc: Document, private _tagName: string, private target: "Dom" | "Text", private textContent?: string) {
     this._tagName = this._tagName.toLocaleLowerCase();
-    target === "Dom" && _tagName === "text" && (this.dom = document.createTextNode(textContent!) as unknown as HTMLElement);
+    if (target === "Dom" && _tagName === "text") {
+      this.dom = document.createElement("span") as unknown as HTMLElement;
+      this.dom.innerHTML = textContent!;
+    };
     target === "Dom" && _tagName !== "text" && (this.dom = document.createElement(_tagName));
   }
 
@@ -19,7 +31,16 @@ export class V_HTMLElement {
     return this._tagName;
   }
 
-  appendChild(element: V_HTMLElement) {
+  getChildItem(index: number): IVDom_Element {
+    return this.childNodes[index];
+  }
+
+  prepend(element: IVDom_Element) {
+    this.childNodes.unshift(element);
+    this.dom?.prepend(element.dom!);
+  }
+
+  appendChild(element: IVDom_Element) {
     this.childNodes.push(element);
     this.dom?.appendChild(element.dom!);
   }
@@ -49,7 +70,7 @@ export class V_HTMLElement {
     }
   }
 
-  #createNodeFromJson = (json: Node, parentNode?: V_HTMLElement) => {
+  #createNodeFromJson = (json: Node, parentNode?: VDom_Element) => {
     if (json.nodeType === NODE_TYPE.TEXT_NODE) {
       const elt = this._doc.createElement(json.tagName, json.textContent);
       return elt;
@@ -109,7 +130,7 @@ export class V_HTMLElement {
   }
 
   getAttribute(attName: string) {
-    this._attributes[attName];
+    return this._attributes[attName];
   }
 
   removeAttribute(attName: string) {
@@ -117,7 +138,7 @@ export class V_HTMLElement {
     this.dom?.removeAttribute(this.target); 
   }
 
-  findFirst(predicate: (elt: V_HTMLElement) => boolean, deepLevel: number = -1): V_HTMLElement | null {
+  findFirst(predicate: (elt: IVDom_Element) => boolean, deepLevel: number = -1): IVDom_Element | null {
     const res = this.childNodes.filter(_ => predicate(_));
     if (res.length) {
       return res[0];
@@ -133,7 +154,7 @@ export class V_HTMLElement {
     return null;
   }
 
-  findAll(predicate: (elt: V_HTMLElement) => boolean, deepLevel: number = -1): V_HTMLElement[] | null {
+  findAll(predicate: (elt: IVDom_Element) => boolean, deepLevel: number = -1): IVDom_Element[] | null {
     const res = this.childNodes.filter(_ => predicate(_));
 
     if (deepLevel > 0 || deepLevel < 0) {
@@ -157,7 +178,9 @@ export class V_HTMLElement {
   }
 
   toHtml(indentLevel: number = 0): string {
-    if (this.textContent) return this.textContent;
+    if (this.textContent) return `<span>${this.textContent}</span>`;
+    if (this.tagName === "br") return "<br>";
+    
     let attrs = "";
     for(const i in this._attributes) {
       attrs += ` ${i}=${JSON.stringify(this._attributes[i])}`;

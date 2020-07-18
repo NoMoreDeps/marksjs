@@ -1,10 +1,11 @@
-import { V_HTMLElement } from "./HTMLElement";
-export declare class Document {
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { IDocument } from "../../Interfaces/IDocument";
+export declare class Document implements IDocument {
     private target;
     private _root;
     constructor(target: "Dom" | "Text");
-    get root(): V_HTMLElement;
-    findFirst(predicate: (elt: V_HTMLElement) => boolean, deepLevel?: number): V_HTMLElement | null;
-    findAll(predicate: (elt: V_HTMLElement) => boolean, deepLevel?: number): V_HTMLElement[] | null;
-    createElement(tagName: string, textContent?: string): V_HTMLElement;
+    get root(): IVDom_Element;
+    findFirst(predicate: (elt: IVDom_Element) => boolean, deepLevel?: number): IVDom_Element | null;
+    findAll(predicate: (elt: IVDom_Element) => boolean, deepLevel?: number): IVDom_Element[] | null;
+    createElement(tagName: string, textContent?: string): IVDom_Element;
 }

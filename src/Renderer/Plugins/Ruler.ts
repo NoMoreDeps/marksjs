@@ -1,6 +1,8 @@
 import { IRenderingEnine }  from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption } from "../../Interfaces/IRenderingOption" ;
 import { applyStyle }       from "./Helper"                          ;
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { IDocument } from "../../Interfaces/IDocument";
 
 export class RulerRenderer implements IRenderingEnine {
   themeStyles      !: any                       ;
@@ -8,16 +10,19 @@ export class RulerRenderer implements IRenderingEnine {
   private _succeeded : boolean               = false     ;
   public applyTo     : string[]              = ["RULER"] ;
   public options     : TRenderingOption      = {}        ;       
-  public domContent  : HTMLElement | null    = null      ;
+  public domContent  : IVDom_Element | null    = null      ;
   public content     : string                = ""        ;
   public type        : string                = ""        ;
   public weight      : number                = 110       ;
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+
     this._succeeded = false;
-    this.domContent = document.createElement("hr"); 
+    this.domContent = this.document.createElement("hr"); 
     if (this.options.variant === "dashed") {
-      this.domContent.style.borderStyle = "dashed";
+      this.domContent.setStyle("border-style","dashed");
     }
 
     applyStyle(this, "hr");
