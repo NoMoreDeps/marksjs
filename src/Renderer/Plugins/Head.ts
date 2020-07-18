@@ -1,6 +1,8 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
 import { applyStyle, prepareInternals, processInternals }                    from "./Helper"                          ;
+import { IDocument } from "../../Interfaces/IDocument";
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 
 export class HeadRenderer implements IRenderingEnine {
   themeStyles      !: any                       ;
@@ -9,11 +11,14 @@ export class HeadRenderer implements IRenderingEnine {
   public applyTo    : string[]           = ["HEAD"] ;
   public options    : TRenderingOption   = {}       ;
   public content    : string             = ""       ;
-  public domContent : HTMLElement | null = null     ;
+  public domContent : IVDom_Element | null = null     ;
   public type       : string             = ""       ;
   public weight      : number                = 0           ;
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+    
     let rgx = /^\s*(?<header>#{1,6})(?<content>.*)/;
     this._succeeded = rgx.test(this.content);
 
@@ -25,9 +30,9 @@ export class HeadRenderer implements IRenderingEnine {
       const content = rgxRes?.groups?.["content"] ?? "";
 
       this.content = `<h${header.length}>${content}</h${header.length}>`;
-      this.domContent = document.createElement(`div`);
-      this.domContent.innerHTML = this.content;
-      this.domContent = this.domContent.children.item(0) as HTMLElement;
+      this.domContent = this.document.createElement(`div`);
+      this.domContent.setInnerHTML(this.content);
+      this.domContent = this.domContent.getChildItem(0);
 
      processInternals(this, "head");
     }

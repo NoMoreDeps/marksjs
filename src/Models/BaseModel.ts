@@ -1,6 +1,9 @@
 import { TRenderingOption }   from "../Interfaces/IRenderingOption" ;
 import { RendererRepository } from "../Renderer/RendererRepository" ;
 import { IModel }             from "./IModel"                       ;
+import { IVDom_Element } from "../Interfaces/IVDom_Element";
+import { IDocument } from "../Interfaces/IDocument";
+import { Document } from "../VDom/Html/Document";
 
 export type TModel  = BaseModel & IModel;
 
@@ -8,10 +11,11 @@ export class BaseModel {
   source      : string             = ""   ;
   cleanSource : string             = ""   ;
   output      : string             = ""   ;
-  domElement  : HTMLElement | null = null ;
+  domElement  : IVDom_Element | null = null ;
   options     : TRenderingOption   = {}   ;
   processed   : number             = 0    ;
   dirty       : boolean            = false;
+  document    : IDocument          = new Document("Dom")
 
   constructor(private _RendererRepository?: RendererRepository) {}
 
@@ -24,7 +28,7 @@ export class BaseModel {
   }
 
   process(context: any) {
-    this.domElement = document.createElement(this.options.pElt ?? "p");
+    this.domElement = this.document.createElement(this.options.pElt ?? "p");
     const renderers = this._RendererRepository!.getByType((this as unknown as IModel).type, this.get()).sort((a, b) => b.weight - a.weight);
     renderers.forEach((_, idx) => {
       _.context = context;
@@ -63,9 +67,9 @@ export class BaseModel {
     }
     if (this.domElement?.childElementCount === 1) {
       if (this.options.noPElt) {
-        this.domElement = this.domElement.children.item(0) as HTMLElement;
+        this.domElement = this.domElement.getChildItem(0);
       } else {
-        switch(this.domElement.children.item(0)?.tagName.toLowerCase()) {
+        switch(this.domElement.getChildItem(0)?.tagName.toLowerCase()) {
           case "br":
           case "p":
           case "hr":
@@ -75,7 +79,7 @@ export class BaseModel {
           case "h4":
           case "h5":
           case "h6":
-            this.domElement = this.domElement.children.item(0) as HTMLElement;
+            this.domElement = this.domElement.getChildItem(0);
             break;
         }
       }

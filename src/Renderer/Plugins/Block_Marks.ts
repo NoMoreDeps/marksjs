@@ -1,12 +1,15 @@
 import { IRenderingEnine }  from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption } from "../../Interfaces/IRenderingOption" ;
-import { MarksRenderer }    from "../../MarksRenderer"               ;
+import { IMarksRenderer } from "../../Interfaces/IMarksRenderer" ;
+
 
 import { 
   applyStyle     , 
   processRef     , 
   formatMinSpace 
 } from "./Helper";
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { IDocument } from "../../Interfaces/IDocument";
 
 export class BlockMarksRenderer implements IRenderingEnine {
 
@@ -16,13 +19,17 @@ export class BlockMarksRenderer implements IRenderingEnine {
   public applyTo     : string[]           = ["BLOCK"] ;
   public options     : TRenderingOption   = {}        ;
   public content     : string             = ""        ;
-  public domContent  : HTMLElement | null = null      ;
+  public domContent  : IVDom_Element | null = null      ;
   public type        : string             = ""        ;
   public weight      : number            = 0          ;
-  
-  public cloneRenderer ?: () => MarksRenderer         ;
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
+  public cloneRenderer ?: () => IMarksRenderer         ;
+
 
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+
     this._succeeded     = false                  ;
     const renderer      = this.cloneRenderer?.() ;
     this.options.noPelt = "true"                 ;
@@ -43,8 +50,8 @@ export class BlockMarksRenderer implements IRenderingEnine {
         });
       }
     } else {
-      this.domContent = document.createElement(this.options.elt ?? "div");
-      this.domContent.appendChild(document.createTextNode(this.content));
+      this.domContent = this.document.createElement(this.options.elt ?? "div");
+      this.domContent.appendChild(this.document.createElement("text", this.content));
     }
 
     applyStyle(this, "marks");

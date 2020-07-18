@@ -61,11 +61,11 @@ export function prepareNestedRef(r: IRenderingEnine) {
 }
 
 export function processNestedRef(r: IRenderingEnine) {
-  const refs = r.domContent!.querySelectorAll(`[data-mk-ref="true"]`);
-  refs.forEach(d => {
-    if (d.id in r.globalRefs) {
-      d.appendChild(r.globalRefs[d.id]);
-      delete r.globalRefs[d.id];
+  const refs = r.domContent!.findAll(_ => _.getAttribute("data-mk-ref") === "true");
+  refs && refs.forEach(d => {
+    if (d.id! in r.globalRefs) {
+      d.appendChild(r.globalRefs[d.id!]);
+      delete r.globalRefs[d.id!];
       return;
     }
   });

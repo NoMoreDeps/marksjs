@@ -1,6 +1,9 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
 import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
 import { applyStyle, prepareInternals, processInternals }                    from "./Helper"                          ;
+import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { IDocument } from "../../Interfaces/IDocument";
+import { VDom_Element } from "../../VDom/Html/VDom_Element";
 
 export class ListRenderer implements IRenderingEnine {
   themeStyles      !: any                       ;
@@ -8,12 +11,15 @@ export class ListRenderer implements IRenderingEnine {
   private _succeeded : boolean               = false                ;
   public applyTo     : string[]              = ["LIST-U", "LIST-O"] ;
   public options     : TRenderingOption      = {}                   ;       
-  public domContent  : HTMLElement | null    = null                 ;
+  public domContent  : IVDom_Element | null    = null                 ;
   public content     : string                = ""                   ;
   public type        : string                = ""                   ;
   public weight      : number                = 0                    ;
-
+  private document     !: IDocument                      ;
+  public getDocument   ?: () => IDocument                ;
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+
     //console.log(this.content, this.options, this.themeStyles)
     this._succeeded           = false;
     
@@ -76,13 +82,13 @@ export class ListRenderer implements IRenderingEnine {
     //console.log(this.type, list);
 
 
-    const createNode = (ll: HTMLUListElement | HTMLOListElement, list: any[]) => {
+    const createNode = (ll: IVDom_Element, list: any[]) => {
       list.forEach(_ => {
-        const l = document.createElement("li");
-        l.innerHTML = _.text;
+        const l = this.document.createElement("li");
+        l.setInnerHTML(_.text);
         ll.appendChild(l);
         if (_.c.length) {
-          const newLL = document.createElement(this.type === "LIST-U" ? "ul" : "ol");
+          const newLL = this.document.createElement(this.type === "LIST-U" ? "ul" : "ol");
           l.appendChild(newLL);
           createNode(newLL, _.c);
         }
@@ -90,7 +96,7 @@ export class ListRenderer implements IRenderingEnine {
       return ll;
     }
 
-    const rootLL = document.createElement(this.type === "LIST-U" ? "ul" : "ol");
+    const rootLL = this.document.createElement(this.type === "LIST-U" ? "ul" : "ol");
     createNode(rootLL, list);
 
     this.domContent = rootLL;
