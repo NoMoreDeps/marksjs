@@ -180,7 +180,8 @@ export class VDom_Element implements IVDom_Element{
   toHtml(indentLevel: number = 0): string {
     if (this.textContent) return `<span>${this.textContent}</span>`;
     if (this.tagName === "br") return "<br>";
-    
+    if (this.tagName === "hr") return "<hr>";
+
     let attrs = "";
     for(const i in this._attributes) {
       attrs += ` ${i}=${JSON.stringify(this._attributes[i])}`;
@@ -189,8 +190,12 @@ export class VDom_Element implements IVDom_Element{
     const children = this.childNodes.map(_ => _.toHtml(indentLevel !== -1 ? indentLevel + 2 : -1)).join(indentLevel !== -1 ? "\n" : "");
     const tagName  = this._tagName;
 
+    let prepareEndInlineTag = "";
+    if (this.childNodes.length === 0) prepareEndInlineTag = `</${tagName}>`;
+    if (["input", "img"].includes(tagName)) prepareEndInlineTag = "";
+
     const html = [] as string[];
-    html.push(`${"".padStart(indentLevel, " ")}<${tagName}${classes.length ? ` class="${classes}"` : ""}${attrs}>${this.childNodes.length === 0 ? `</${tagName}>` : ""}`);
+    html.push(`${"".padStart(indentLevel, " ")}<${tagName}${classes.length ? ` class="${classes}"` : ""}${attrs}>${prepareEndInlineTag}`);
     this.childNodes.length && html.push(children);
     this.childNodes.length && (html.push(`${"".padStart(indentLevel, " ")}</${tagName}>`));
     
