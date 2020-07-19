@@ -125,11 +125,9 @@ export class VDom_Element implements IVDom_Element{
 
   setInnerText(text: string) {
     if (this.target === "Dom") {
-      this.dom!.innerText = text;
+      this.dom!.innerHTML = text;
     }
-
-    const textNode = new Node({tagName: "innerText", nodeType: NODE_TYPE.TEXT_NODE, textContent: text});
-    this.appendChild(this.#createNodeFromJson(textNode)!);
+    this.textContent = text;
   }
 
   setAttribute(attName: string, value: string) {
@@ -190,8 +188,7 @@ export class VDom_Element implements IVDom_Element{
   }
 
   toHtml(indentLevel: number = 0): string {
-    if (this.tagName === "text"      && this.textContent) return `<span>${this.textContent}</span>`;
-    if (this.tagName === "innerText" && this.textContent) return `${this.textContent}`;
+    if (this.tagName === "text" && this.textContent) return `<span>${this.textContent}</span>`;
     if (this.tagName === "br") return "<br>";
     if (this.tagName === "hr") return "<hr>";
 
@@ -209,6 +206,7 @@ export class VDom_Element implements IVDom_Element{
 
     const html = [] as string[];
     html.push(`${"".padStart(indentLevel, " ")}<${tagName}${classes.length ? ` class="${classes}"` : ""}${attrs}>${prepareEndInlineTag}`);
+    this.textContent && html.push(this.textContent);
     this.childNodes.length && html.push(children);
     this.childNodes.length && (html.push(`${"".padStart(indentLevel, " ")}</${tagName}>`));
     

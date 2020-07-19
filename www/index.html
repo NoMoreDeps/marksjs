@@ -839,7 +839,7 @@ sequenceDiagram
     const mermaidPlugin = new Marks_Mermaid.BlockMermaidRenderer();
     renderer.registerRenderers(
       ...Marks.Plugins.map(_ => new _()),
-      //mermaidPlugin,
+      mermaidPlugin,
       //...Marks_Bootstrap.BsPlugins.map(_ => new _())
     );
 
