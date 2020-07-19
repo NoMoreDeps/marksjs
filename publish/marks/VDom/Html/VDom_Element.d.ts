@@ -27,6 +27,8 @@ export declare class VDom_Element implements IVDom_Element {
     };
     setInnerHTML(html: string): void;
     setInnerText(text: string): void;
+    prependText(text: string): void;
+    appendText(text: string): void;
     setAttribute(attName: string, value: string): void;
     getAttribute(attName: string): any;
     removeAttribute(attName: string): void;

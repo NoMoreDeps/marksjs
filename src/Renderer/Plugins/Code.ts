@@ -25,7 +25,7 @@ export class CodeRenderer implements IRenderingEnine {
   
   constructor({skipInit, version, serverPath}: {skipInit?: boolean, version?: string, serverPath?: string} = {skipInit: false}){
     if (!hasBeenInit) hasBeenInit = !!skipInit;
-    
+
     this._version    = version ?? this._version       ;
     this._serverPath = serverPath ?? this._serverPath ;
   }
@@ -36,7 +36,7 @@ export class CodeRenderer implements IRenderingEnine {
     const code      = this.document.createElement("code") ;
     this.domContent = this.document.createElement("pre")  ;
 
-    code.setInnerText(this.content);
+    code.appendText(this.content);
     this.domContent.appendChild(code);
     applyStyle(this, "code");
 

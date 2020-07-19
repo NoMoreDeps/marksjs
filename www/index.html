@@ -63,7 +63,7 @@ blockquote > div {
   </style>
 </head>
 <body>
-  <template id="MD_TMPs">
+  <template id="MD_TMP">
 #### Marks features
 Marks is a markup language that aims to keep what is great with Markdown, but with 
 simple addition that allows it to be extended in a very simpler way.
@@ -825,18 +825,14 @@ sequenceDiagram
 }}
   </template>
 
-  <template id="MD_TMP">
-```none ::- ref:001
-sad
-asd
-as
-
-sdf
-
+  <template id="MD_TMPs">
+```none
+[html]{{
+  <span style="color:red">XXXXX</span>
+}}
 ```
-
-[marks]{{
-  @@001@@
+[html]{{
+  <span style="color:red">XXXXX</span>
 }}
   </template>
 
