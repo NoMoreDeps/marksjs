@@ -13,6 +13,7 @@ export interface IVDom_Element {
     };
     getChildItem(index: number): IVDom_Element;
     setInnerHTML(html: string): void;
+    setInnerText(text: string): void;
     setAttribute(attName: string, value: string): void;
     getAttribute(attName: string): any;
     removeAttribute(attName: string): void;
