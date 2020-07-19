@@ -24,7 +24,10 @@ export class VDom_Element implements IVDom_Element{
       this.dom = document.createElement("span") as unknown as HTMLElement;
       this.dom.innerHTML = textContent!;
     };
-    target === "Dom" && _tagName !== "text" && (this.dom = document.createElement(_tagName));
+    if (target === "Dom" && _tagName === "innerText") {
+      this.dom = document.createTextNode(textContent!) as any as HTMLElement;
+    };
+    target === "Dom" && _tagName !== "text" && _tagName !== "inenrText" && (this.dom = document.createElement(_tagName));
   }
 
   get tagName() {
@@ -120,6 +123,15 @@ export class VDom_Element implements IVDom_Element{
     });
   }
 
+  setInnerText(text: string) {
+    if (this.target === "Dom") {
+      this.dom!.innerText = text;
+    }
+
+    const textNode = new Node({tagName: "innerText", nodeType: NODE_TYPE.TEXT_NODE, textContent: text});
+    this.appendChild(this.#createNodeFromJson(textNode)!);
+  }
+
   setAttribute(attName: string, value: string) {
     this._attributes[attName] = value;
     this.dom?.setAttribute(attName, value);
@@ -178,7 +190,8 @@ export class VDom_Element implements IVDom_Element{
   }
 
   toHtml(indentLevel: number = 0): string {
-    if (this.textContent) return `<span>${this.textContent}</span>`;
+    if (this.tagName === "text"      && this.textContent) return `<span>${this.textContent}</span>`;
+    if (this.tagName === "innerText" && this.textContent) return `${this.textContent}`;
     if (this.tagName === "br") return "<br>";
     if (this.tagName === "hr") return "<hr>";
 
