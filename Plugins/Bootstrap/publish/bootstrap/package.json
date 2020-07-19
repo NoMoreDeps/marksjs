@@ -1,6 +1,6 @@
 {
   "name": "@marks-js/bootstrap",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Bootstrap theme and plugins for Marks rendering engine",
   "main": "index.js",
   "author": "NoMoreDeps",
@@ -12,6 +12,6 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@marks-js/marks": "^1.0.94"
+    "@marks-js/marks": "^1.0.95"
   }
 }

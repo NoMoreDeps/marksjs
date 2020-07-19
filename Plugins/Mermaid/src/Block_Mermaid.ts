@@ -64,7 +64,7 @@ export class BlockMermaidRenderer implements IRenderingEnine {
     this.options = options ;
   }
 
-  async renderFinished(targetElement: IVDom_Element | undefined) {
+  async renderFinished(targetElement: HTMLElement | undefined) {
     const waitAsync = () => new Promise(r => setTimeout(() => { r(); }, 0));
 
     if (!hasBeenInit) {
@@ -82,8 +82,8 @@ export class BlockMermaidRenderer implements IRenderingEnine {
       });
     }
 
-    if (targetElement?.dom) {
-      while(!targetElement.dom.parentElement) {
+    if (targetElement) {
+      while(!targetElement.parentElement) {
         await waitAsync();
       }
     }
