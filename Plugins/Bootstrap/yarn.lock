@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@marks-js/marks@^1.0.79":
+"@marks-js/marks@^1.0.94":
   version "1.0.94"
   resolved "https://registry.yarnpkg.com/@marks-js/marks/-/marks-1.0.94.tgz#b4f6be24b63dfce422dc2b94bb5791f3cfdf63af"
   integrity sha512-TqIkLNQFfuGdOCe5mwbxL7JtsAzWQzx6Oy4Rj9BXF+g/QnqF/DsvTa8i+HTQBvZS/sawF8rK8PHsQ8W8lXFUwA==
