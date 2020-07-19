@@ -1,5 +1,7 @@
 import { IMarksRenderer, TRenderingOption, IRenderingEnine } from "@marks-js/marks"                         ;
-import { loadAssets }                                        from "@marks-js/marks/Renderer/Plugins/Helper" ;
+import { loadAssets, prepareInternals, processRef }                                        from "@marks-js/marks/Renderer/Plugins/Helper" ;
+import { IVDom_Element } from "@marks-js/marks/Interfaces/IVDom_Element";
+import { IDocument } from "@marks-js/marks/Interfaces/IDocument";
 
 let hasBeenInit = false;
 declare var mermaid: any;
@@ -11,12 +13,14 @@ export class BlockMermaidRenderer implements IRenderingEnine {
   public applyTo        : string[]           = ["BLOCK"]     ;
   public options        : TRenderingOption   = {}            ;
   public content        : string             = ""            ;
-  public domContent     : HTMLElement | null = null          ;
+  public domContent     : IVDom_Element | null = null        ;
   public type           : string             = ""            ;
   public weight         : number             = 0             ;
   public cloneRenderer ?: () => IMarksRenderer               ;
+  public getDocument   ?: () => IDocument                    ;
   private _version      : string            = "8.5.2"        ;
   private _selector     : string            = "marksMermaid" ;
+  private document     !: IDocument                      ;
 
   constructor({skipInit, version, selector}: {skipInit?: boolean, version?: string, selector?: string} = {skipInit: false}) {
     if (skipInit) {
@@ -31,16 +35,14 @@ export class BlockMermaidRenderer implements IRenderingEnine {
   }
 
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
     this._succeeded = false;
     
-    this.domContent = document.createElement("div");
+    this.domContent = this.document.createElement("div");
     this.domContent.classList.add(this._selector);
-    this.domContent.innerHTML= this.content;
-   
-    if (this.options.ref) {
-      this.globalRefs[this.options.ref] = this.domContent;
-      this.domContent = null;
-    }
+    this.domContent.setInnerText(this.content);
+
+    processRef(this);
 
     return this.content;
   }
@@ -62,7 +64,7 @@ export class BlockMermaidRenderer implements IRenderingEnine {
     this.options = options ;
   }
 
-  async renderFinished(targetElement: HTMLElement | undefined) {
+  async renderFinished(targetElement: IVDom_Element | undefined) {
     const waitAsync = () => new Promise(r => setTimeout(() => { r(); }, 0));
 
     if (!hasBeenInit) {
@@ -80,8 +82,8 @@ export class BlockMermaidRenderer implements IRenderingEnine {
       });
     }
 
-    if (targetElement) {
-      while(!targetElement.parentElement) {
+    if (targetElement?.dom) {
+      while(!targetElement.dom.parentElement) {
         await waitAsync();
       }
     }
