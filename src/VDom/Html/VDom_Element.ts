@@ -19,15 +19,15 @@ export class VDom_Element implements IVDom_Element{
   }
 
   constructor(private _doc: Document, private _tagName: string, private target: "Dom" | "Text", private textContent?: string) {
-    this._tagName = this._tagName.toLocaleLowerCase();
-    if (target === "Dom" && _tagName === "text") {
+    this._tagName = this._tagName.toLowerCase();
+    if (target === "Dom" && this._tagName === "text") {
       this.dom = document.createElement("span") as unknown as HTMLElement;
       this.dom.innerHTML = textContent!;
     };
-    if (target === "Dom" && _tagName === "innerText") {
+    if (target === "Dom" && this._tagName === "innertext") {
       this.dom = document.createTextNode(textContent!) as any as HTMLElement;
     };
-    target === "Dom" && _tagName !== "text" && _tagName !== "inenrText" && (this.dom = document.createElement(_tagName));
+    target === "Dom" && this._tagName !== "text" && this._tagName !== "innertext" && (this.dom = document.createElement(_tagName));
   }
 
   get tagName() {
