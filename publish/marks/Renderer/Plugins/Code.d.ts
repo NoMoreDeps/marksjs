@@ -26,5 +26,5 @@ export declare class CodeRenderer implements IRenderingEnine {
     succeeded(): boolean;
     canProcess(): boolean;
     set(type: string, content: string, options: TRenderingOption): void;
-    renderFinished(targetElement: IVDom_Element | undefined): Promise<void>;
+    renderFinished(targetElement: HTMLElement | undefined): Promise<void>;
 }

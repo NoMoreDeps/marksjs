@@ -2,7 +2,6 @@ import { IRenderingEnine } from "./Interfaces/IRenderingEngine";
 import { RendererRepository } from "./Renderer/RendererRepository";
 import { IMarksRenderer } from "./Interfaces/IMarksRenderer";
 import { VDom_Element } from "./VDom/Html/VDom_Element";
-import { IVDom_Element } from "./Interfaces/IVDom_Element";
 export declare class MarksRenderer implements IMarksRenderer {
     protected _rendererRepo: RendererRepository;
     protected _globalRefs: any;
@@ -37,7 +36,7 @@ export declare class MarksRenderer implements IMarksRenderer {
      * @param target The Dom target node
      */
     internalRender(source: string, noEmit?: boolean, target?: VDom_Element): VDom_Element;
-    triggerRenderFinished(targetRenderer: IVDom_Element): void;
+    triggerRenderFinished(targetRenderer: HTMLElement): void;
     /**
      * Render the markdown template
      * @param templateId Template Id

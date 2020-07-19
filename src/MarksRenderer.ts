@@ -316,13 +316,13 @@ export class MarksRenderer implements IMarksRenderer {
     //console.log(`Processed in ${endTime - startTime} ms`);
 
     //console.log(noEmit, this.manualTrigger)
-    if (!noEmit && !this.manualTrigger) {
-      this.triggerRenderFinished(targetRenderer);
+    if (!noEmit && !this.manualTrigger && this.targetRender === "Dom") {
+      this.triggerRenderFinished(targetRenderer.dom!);
     }
     return targetRenderer as VDom_Element;
   }
 
-  triggerRenderFinished(targetRenderer: IVDom_Element) {
+  triggerRenderFinished(targetRenderer: HTMLElement) {
     this._rendererRepo["refs"].forEach(_ => _.renderFinished?.(targetRenderer))
     this.renderFinished?.();
   }

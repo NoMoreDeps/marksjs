@@ -32,5 +32,5 @@ export interface IRenderingEnine {
   /**
    * This method is called if defined when a render has been done
    */
-  renderFinished  ?: (mountingPoint: IVDom_Element) => void;
+  renderFinished  ?: (mountingPoint: HTMLElement) => void;
 }

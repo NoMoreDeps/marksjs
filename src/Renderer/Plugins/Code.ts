@@ -62,7 +62,7 @@ export class CodeRenderer implements IRenderingEnine {
     this.options = options ;
   }
 
-  async renderFinished(targetElement: IVDom_Element | undefined) {
+  async renderFinished(targetElement: HTMLElement | undefined) {
     if (!hasBeenInit) {
       hasBeenInit  = true  ;
       
