@@ -1,24 +1,30 @@
-import { IRenderingEnine, TRenderingOption } from "@marks-js/marks";
-import { Helper } from "@marks-js/marks";
+import { IRenderingEnine, TRenderingOption } from "@marks-js/marks"                          ;
+import { Helper }                            from "@marks-js/marks"                          ;
+import { IVDom_Element }                     from "@marks-js/marks/Interfaces/IVDom_Element" ;
+import { IDocument }                         from "@marks-js/marks/Interfaces/IDocument"     ;
 
 
 export class BlockBsCarouselRenderer implements IRenderingEnine {
-  themeStyles       !: any;                           ;
-  globalRefs         : any                            ;
-  private _succeeded : boolean = false                ;
-  public applyTo     : string[]           = ["BLOCK"] ;
-  public options     : TRenderingOption   = {}        ;
-  public content     : string             = ""        ;
-  public domContent  : HTMLElement | null = null      ;
-  public type        : string             = ""        ;
-  public weight      : number             = 0         ;
+  themeStyles              !: any;                           ;
+  globalRefs                : any                            ;
+  private _succeeded        : boolean = false                ;
+  public applyTo            : string[]           = ["BLOCK"] ;
+  public options            : TRenderingOption   = {}        ;
+  public content            : string             = ""        ;
+  public domContent         : IVDom_Element | null = null    ;
+  public type               : string             = ""        ;
+  public weight             : number             = 0         ;
+  public getDocument       ?: () => IDocument                ;
+  private document         !: IDocument                      ;
 
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
+  
     this._succeeded = false;
     const payload = JSON.parse(`{ ${this.content} }`);
 
-    this.domContent = document.createElement("div");
-    this.domContent.innerHTML = `
+    this.domContent = this.document.createElement("div");
+    this.domContent.setInnerHTML(`
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -45,16 +51,10 @@ export class BlockBsCarouselRenderer implements IRenderingEnine {
     <span class="sr-only">Next</span>
   </a>
 </div>
-    
-    `;
-   
+    `);
 
     Helper.applyStyle(this, "bs-button");
-
-    if (this.options.ref) {
-      this.globalRefs[this.options.ref] = this.domContent;
-      this.domContent = null;
-    }
+    Helper.processRef(this);
 
     return this.content;
   }

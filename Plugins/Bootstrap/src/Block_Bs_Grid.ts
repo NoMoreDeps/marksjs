@@ -4,6 +4,8 @@ import {
   TRenderingOption , 
   IRenderingEnine 
 } from "@marks-js/marks";
+import { IVDom_Element } from "@marks-js/marks/Interfaces/IVDom_Element" ;
+import { IDocument }     from "@marks-js/marks/Interfaces/IDocument"     ;
 
 export class BlockBsGridRenderer implements IRenderingEnine {
   themeStyles          !: any                            ;
@@ -12,43 +14,46 @@ export class BlockBsGridRenderer implements IRenderingEnine {
   public applyTo        : string[]           = ["BLOCK"] ;
   public options        : TRenderingOption   = {}        ;
   public content        : string             = ""        ;
-  public domContent     : HTMLElement | null = null      ;
+  public domContent     : IVDom_Element | null = null      ;
   public type           : string             = ""        ;
   public weight         : number             = 0         ;
   public cloneRenderer ?: () => IMarksRenderer           ;
+  public getDocument     ?: () => IDocument                ;
+  private document       !: IDocument                      ;
 
   render(): string {
+    if (!this.document) this.document = this.getDocument!();
     this._succeeded = false;
     this.options.nested = "true";
-    this.domContent = document.createElement("div");
+    this.domContent = this.document.createElement("div");
 
     Helper.prepareInternals(this);
 
     this.domContent.classList.add("container");
     const gridDef = this.content.split("\n").map(_ => _.trim());
 
-    let row = document.createElement("div");
+    let row = this.document.createElement("div");
     row.classList.add("row");
 
     gridDef.forEach(cell => {
       if (cell === "") {
-        if (row.childNodes.length > 0) {
+        if (row.childElementCount > 0) {
           this.domContent?.appendChild(row);
         }
-        row = document.createElement("div");
+        row = this.document.createElement("div");
         row.classList.add("row");
         return;
       }
       const [styles, placeholder] = cell.split("|");
-      const cellDom = document.createElement("div");
+      const cellDom = this.document.createElement("div");
       styles.split(",").forEach(s => {
         cellDom.classList.add(s);
       });
-      cellDom.innerHTML = placeholder;
+      cellDom.setInnerHTML(placeholder);
       row.appendChild(cellDom);
     });
 
-    if (row.childNodes.length > 0) {
+    if (row.childElementCount > 0) {
       this.domContent?.appendChild(row);
     }
     
