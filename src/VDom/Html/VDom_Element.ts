@@ -132,20 +132,12 @@ export class VDom_Element implements IVDom_Element{
   }
 
   prependText(text: string) {
-    const elt = this._doc.createElement("text", text);
-    if (this.target === "Dom") {
-      elt.dom!.innerHTML = "";
-      elt.dom!.appendChild(document.createTextNode(text));
-    }
+    const elt = this._doc.createElement("innerText", text);
     this.prepend(elt);
   }
 
   appendText(text: string) {
-    const elt = this._doc.createElement("text", text);
-    if (this.target === "Dom") {
-      elt.dom!.innerHTML = "";
-      elt.dom!.appendChild(document.createTextNode(text));
-    }
+    const elt = this._doc.createElement("innerText", text);
     this.appendChild(elt);
   }
 

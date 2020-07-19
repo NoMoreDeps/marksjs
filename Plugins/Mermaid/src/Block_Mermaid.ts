@@ -40,7 +40,7 @@ export class BlockMermaidRenderer implements IRenderingEnine {
     
     this.domContent = this.document.createElement("div");
     this.domContent.classList.add(this._selector);
-    this.domContent.setInnerText(this.content);
+    this.domContent.appendText(this.content);
 
     processRef(this);
 
