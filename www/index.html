@@ -63,7 +63,7 @@ blockquote > div {
   </style>
 </head>
 <body>
-  <template id="MD_TMP">
+  <template id="MD_TMPs">
 #### Marks features
 Marks is a markup language that aims to keep what is great with Markdown, but with 
 simple addition that allows it to be extended in a very simpler way.
@@ -825,9 +825,18 @@ sequenceDiagram
 }}
   </template>
 
-  <template id="MD_TMPs">
-[bs-carousel]{{
-   
+  <template id="MD_TMP">
+```none ::- ref:001
+sad
+asd
+as
+
+sdf
+
+```
+
+[marks]{{
+  @@001@@
 }}
   </template>
 
@@ -902,6 +911,11 @@ sequenceDiagram
   const target = document.createElement("div");
   document.body.appendChild(target);
   renderer.renderFromHtmlNode("#MD_TMP", "#APP")
+
+  setTimeout(() => {
+  renderer.renderFromHtmlNode("#MD_TMP", "#APP");
+  
+  }, 2000);
 
   </script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/components/prism-core.min.js"></script>

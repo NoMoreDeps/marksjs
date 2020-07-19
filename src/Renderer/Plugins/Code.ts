@@ -24,7 +24,8 @@ export class CodeRenderer implements IRenderingEnine {
   public getDocument   ?: () => IDocument                ;
   
   constructor({skipInit, version, serverPath}: {skipInit?: boolean, version?: string, serverPath?: string} = {skipInit: false}){
-    hasBeenInit      = !!skipInit                     ;
+    if (!hasBeenInit) hasBeenInit = !!skipInit;
+    
     this._version    = version ?? this._version       ;
     this._serverPath = serverPath ?? this._serverPath ;
   }
@@ -35,7 +36,7 @@ export class CodeRenderer implements IRenderingEnine {
     const code      = this.document.createElement("code") ;
     this.domContent = this.document.createElement("pre")  ;
 
-    code.appendChild(this.document.createElement("text",this.content));
+    code.setInnerText(this.content);
     this.domContent.appendChild(code);
     applyStyle(this, "code");
 
@@ -63,6 +64,7 @@ export class CodeRenderer implements IRenderingEnine {
   }
 
   async renderFinished(targetElement: HTMLElement | undefined) {
+    console.log("hasBeenInit", hasBeenInit)
     if (!hasBeenInit) {
       hasBeenInit  = true  ;
       

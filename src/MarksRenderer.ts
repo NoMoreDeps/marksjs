@@ -317,7 +317,7 @@ export class MarksRenderer implements IMarksRenderer {
 
     //console.log(noEmit, this.manualTrigger)
     if (!noEmit && !this.manualTrigger && this.targetRender === "Dom") {
-      this.triggerRenderFinished(targetRenderer.dom!);
+      setTimeout(() => this.triggerRenderFinished(targetRenderer.dom!), 0);
     }
     return targetRenderer as VDom_Element;
   }
