@@ -64,7 +64,6 @@ export class CodeRenderer implements IRenderingEnine {
   }
 
   async renderFinished(targetElement: HTMLElement | undefined) {
-    console.log("hasBeenInit", hasBeenInit)
     if (!hasBeenInit) {
       hasBeenInit  = true  ;
       

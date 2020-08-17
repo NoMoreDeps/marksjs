@@ -202,6 +202,7 @@ export class VDom_Element implements IVDom_Element{
     if (this.tagName === "text" && this.textContent) return `<span>${this.textContent}</span>`;
     if (this.tagName === "br") return "<br>";
     if (this.tagName === "hr") return "<hr>";
+    if (this.tagName === "innertext") return this.textContent ?? "";
 
     let attrs = "";
     for(const i in this._attributes) {

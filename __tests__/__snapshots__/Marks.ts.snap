@@ -15,16 +15,16 @@ exports[`Code block Should render code block with color: \`\`\`javascript
     }
   }
 \`\`\` 1`] = `
-"<div><p><pre><code class=\\"language-javascript\\"><span>  class Hello {
+"<div><p><pre><code class=\\"language-javascript\\">  class Hello {
     sayHello() {
       return \\"Hello Kitty\\";
     }
-  }</span></code></pre></p></div>"
+  }</code></pre></p></div>"
 `;
 
 exports[`Code block Should render code block: \`\`\`
   Place some code here
-\`\`\` 1`] = `"<div><p><pre><code><span>  Place some code here</span></code></pre></p></div>"`;
+\`\`\` 1`] = `"<div><p><pre><code>  Place some code here</code></pre></p></div>"`;
 
 exports[`Emphasis Should render Bold & Italic: This is __*Bold &amp; Italic*__ 1`] = `"<div><p><span><span>This is </span><b><em><span>Bold &amp; Italic</span></em></b></span></p></div>"`;
 
