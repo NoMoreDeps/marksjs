@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Action & Context Should render html bock: Name : @@name@@ ::- mk-repeat:names 1`] = `"<div><p><span><span>Name : Bob </span></span></p><p><span><span>Name : Alice </span></span></p></div>"`;
+
+exports[`Action & Context Should render html bock: Say @@hello@@ 1`] = `"<div><p><span><span>Say Hello kitty</span></span></p></div>"`;
+
+exports[`Action & Context Should render html bock: Text show 1 ::- mk-show:show1
+
+    Text show 2 ::- mk-show:show2 1`] = `"<div><p><span><span>Text show 1 </span></span></p><p></p></div>"`;
+
 exports[`Blockquote Should render emphasis inside blockquote: > This text can use **bold** or *italic*  
 > and so much ***\`more\`***... 1`] = `"<div><p><blockquote><div><p><span><span>This text can use </span><b><span>bold</span></b><span> or </span><em><span>italic</span></em><br><span>and so much </span><b><em><code><span>more</span></code></em></b><span>...</span></span></p></div></blockquote></p></div>"`;
 
@@ -100,6 +108,12 @@ exports[`Link / Image / Ruler Should render Ruler: ___ 1`] = `"<div><hr></div>"`
 exports[`Marks block Should render marks block: [marks]{{
       ### h3 heading
     }} 1`] = `"<div><p><div><h3><span> h3 heading</span></h3></div></p></div>"`;
+
+exports[`Nested elements Should render inline nested and block nested: [marks ref:001]{{
+    Hello
+  }}
+  Ceci est un @@001@@
+   1`] = `"<div><p><span><span>  Ceci est un </span><div id=\\"001\\" data-mk-ref=\\"true\\"><div><p><span><span>Hello</span></span></p></div></div><br></span></p></div>"`;
 
 exports[`Nested elements Should render inline nested and block nested: Hello ::- ref:001
 

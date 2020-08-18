@@ -373,10 +373,39 @@ describe("Nested elements", () => {
   it("Should render inline nested and block nested", () => {
     const expected = "";
     const r = createRenderer();
-    
+
     testHtmlAndTextWithSnapshot(r, `Hello ::- ref:001
 
 Ceci est un @@001@@`);
+
+    testHtmlAndTextWithSnapshot(r, `[marks ref:001]{{
+    Hello
+  }}
+  Ceci est un @@001@@
+  `);
+  });
+
+});
+
+describe("Action & Context", () => {
+  it("Should render html bock", () => {
+    const expected = "";
+    const r = createRenderer();
+    r.context = {
+      hello : "Hello kitty" ,
+      show1 : true          ,
+      show2 : false         ,
+      names: [
+        { name: "Bob" }, 
+        { name: "Alice" }
+      ]
+    }
+    
+    testHtmlAndTextWithSnapshot(r, `Say @@hello@@`);
+    testHtmlAndTextWithSnapshot(r, `Text show 1 ::- mk-show:show1
+
+    Text show 2 ::- mk-show:show2`);
+    testHtmlAndTextWithSnapshot(r, `Name : @@name@@ ::- mk-repeat:names`);
   });
 });
 
