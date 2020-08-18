@@ -90,9 +90,9 @@ export function processInternals(r: IRenderingEnine, blocktype: string) {
 
 export function applyStyle(r: IRenderingEnine, type: string) {
   if (r.options.theme) {
-    if (r.themeStyles[type].theme[r.options.theme]) {
+    if (r.themeStyles?.[type]?.theme?.[r.options.theme]) {
       r.domContent!.classList.add(r.themeStyles[type].theme[r.options.theme]);
-    } else if(r.themeStyles.all.theme[r.options.theme]) {
+    } else if(r.themeStyles?.all?.theme?.[r.options.theme]) {
       r.domContent!.classList.add(r.themeStyles.all.theme[r.options.theme]);
     }
   }

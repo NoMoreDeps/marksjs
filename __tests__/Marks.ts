@@ -6,11 +6,11 @@ function createRenderer() {
   return r;
 }
 
-function testHtmlAndTextWithSnapshot(r: MarksRenderer, template: string) {
+function testHtmlAndTextWithSnapshot(r: MarksRenderer, template: string, forceSecondTemplate?: string) {
   let elt = r.render(template);
   expect(elt.outerHTML).toMatchSnapshot(template);
   let eltStr = r.renderToText(template, -1);
-  expect(eltStr).toBe(elt.outerHTML);
+  expect(eltStr).toBe(forceSecondTemplate ?? elt.outerHTML);
 }
 
 describe("Test dom", () => {
@@ -187,6 +187,13 @@ describe("Heading", () => {
 ${"".padStart(i , "=")}`);
     }
   });
+  it("Should render === block as text if nothing", () => {
+    const r = createRenderer();
+
+    testHtmlAndTextWithSnapshot(r,`Text not heading   
+    \\=\\=\\=`, "<div><p><span><span>Text not heading   </span><br><span>    &#61;&#61;&#61;</span></span></p></div>");
+    
+  });
 });
 
 describe("Blockquote", () => {
@@ -292,6 +299,87 @@ describe("Link / Image / Ruler", () => {
     testHtmlAndTextWithSnapshot(r,`___`);
   });
 });
+
+describe("Image Block", () => {
+  it("Should render Image block", () => {
+    const r = createRenderer();
+    
+    testHtmlAndTextWithSnapshot(r,`[img width:100px]{{
+      "src"   : "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png",
+      "alt"   : "Image",
+      "title" : "Me, myself and I"
+    }}`);
+  });
+});
+
+
+describe("Styles", () => {
+  it("Should render theme, variant, classes", () => {
+    const r = createRenderer();
+    r.setThemeStyle({
+      all: {
+        theme: {
+          dark: ["darkCls"]
+        },
+        variant: {
+          primary: ["primaryCls"]
+        }
+      }
+    })
+    testHtmlAndTextWithSnapshot(r,`This is a text ::- classes:myClass1,myClass2 theme:dark variant:primary`);
+  });
+});
+
+describe("Styles", () => {
+  it("Should table block markdown and csv", () => {
+    const r = createRenderer();
+    
+    testHtmlAndTextWithSnapshot(r,`[table format:markdown] {{
+      | COL A | COL B   | COL C  |
+      |-------|---------|--------|
+      | AA    | BB      |CC      |
+    }}`);
+
+    testHtmlAndTextWithSnapshot(r, `[table format:csv] {{
+      COL A,COL B,COL C
+      AA,BB,CC
+      }}`);
+  });
+});
+
+describe("Marks block", () => {
+  it("Should render marks block", () => {
+    const expected = "";
+    const r = createRenderer();
+    
+    testHtmlAndTextWithSnapshot(r,`[marks]{{
+      ### h3 heading
+    }}`);
+  });
+});
+
+describe("HTML Block", () => {
+  it("Should render html bock", () => {
+    const expected = "";
+    const r = createRenderer();
+    
+    testHtmlAndTextWithSnapshot(r, `[html]{{
+      <h3>H3 heading</h3>
+    }}`);
+  });
+});
+
+describe("Nested elements", () => {
+  it("Should render inline nested and block nested", () => {
+    const expected = "";
+    const r = createRenderer();
+    
+    testHtmlAndTextWithSnapshot(r, `Hello ::- ref:001
+
+Ceci est un @@001@@`);
+  });
+});
+
 
 /**
 describe("", () => {

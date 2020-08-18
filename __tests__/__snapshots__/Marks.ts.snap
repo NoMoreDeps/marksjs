@@ -48,6 +48,13 @@ exports[`Emphasis Should render stroke: This is ~~stroke~~ 1`] = `"<div><p><span
 
 exports[`Emphasis Should render underline: This is ~underline~ 1`] = `"<div><p><span><span>This is </span><span style=\\"text-decoration: underline\\"><span>underline</span></span></span></p></div>"`;
 
+exports[`HTML Block Should render html bock: [html]{{
+      <h3>H3 heading</h3>
+    }} 1`] = `"<div><p><div><h3><span>H3 heading</span></h3></div></p></div>"`;
+
+exports[`Heading Should render === block as text if nothing: Text not heading   
+    \\=\\=\\= 1`] = `"<div><p><span><span>Text not heading   </span><br><span>    ===</span></span></p></div>"`;
+
 exports[`Heading Should render Heading 1 to 6 with #: # Heading 1`] = `"<div><h1><span> Heading</span></h1></div>"`;
 
 exports[`Heading Should render Heading 1 to 6 with #: ## Heading 1`] = `"<div><h2><span> Heading</span></h2></div>"`;
@@ -78,11 +85,25 @@ exports[`Heading Should render Heading 1 to 6 with =: Heading
 exports[`Heading Should render Heading 1 to 6 with =: Heading
 ====== 1`] = `"<div><h6><span> Heading</span></h6></div>"`;
 
+exports[`Image Block Should render Image block: [img width:100px]{{
+      "src"   : "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png",
+      "alt"   : "Image",
+      "title" : "Me, myself and I"
+    }} 1`] = `"<div><p><img alt=\\"Image\\" title=\\"Me, myself and I\\" src=\\"https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png\\"></p></div>"`;
+
 exports[`Link / Image / Ruler Should render Image: ![Wikipedia](https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png "Wikipedia Logo") 1`] = `"<div><p><span><img src=\\"https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png\\" alt=\\"Wikipedia\\" title=\\"Wikipedia Logo\\"></span></p></div>"`;
 
 exports[`Link / Image / Ruler Should render Link: [Wikipedia](https://wikipedia.com "new") 1`] = `"<div><p><span><a href=\\"https://wikipedia.com\\" target=\\"new\\"><span>Wikipedia</span></a></span></p></div>"`;
 
 exports[`Link / Image / Ruler Should render Ruler: ___ 1`] = `"<div><hr></div>"`;
+
+exports[`Marks block Should render marks block: [marks]{{
+      ### h3 heading
+    }} 1`] = `"<div><p><div><h3><span> h3 heading</span></h3></div></p></div>"`;
+
+exports[`Nested elements Should render inline nested and block nested: Hello ::- ref:001
+
+Ceci est un @@001@@ 1`] = `"<div><p></p><p><span><span>Ceci est un </span><div id=\\"001\\" data-mk-ref=\\"true\\"><span><span>Hello </span></span></div></span></p></div>"`;
 
 exports[`Ordered lists Should render list starting with 1: 1. Item 1
     1. Item 2
@@ -125,6 +146,19 @@ exports[`Ordered lists Should render nested list starting with the generic symbo
     #. Item 2.1.1
   #. Item 2.2
 #. Item 3 1`] = `"<div><p><ol><li><span>Item 1</span></li><li><span>Item 2</span><ol><li><span>Item 2.1</span><ol><li><span>Item 2.1.1</span></li></ol></li><li><span>Item 2.2</span></li></ol></li><li><span>Item 3</span></li></ol></p></div>"`;
+
+exports[`Styles Should render theme, variant, classes: This is a text ::- classes:myClass1,myClass2 theme:dark variant:primary 1`] = `"<div><p><span class=\\"darkCls primaryCls myClass1 myClass2\\"><span>This is a text </span></span></p></div>"`;
+
+exports[`Styles Should table block markdown and csv: [table format:csv] {{
+      COL A,COL B,COL C
+      AA,BB,CC
+      }} 1`] = `"<div><p><table><thead><tr><th align=\\"left\\"><span>COL A</span></th><th align=\\"left\\"><span>COL B</span></th><th align=\\"left\\"><span>COL C</span></th></tr></thead><tbody><tr><td align=\\"left\\"><span>AA</span></td><td align=\\"left\\"><span>BB</span></td><td align=\\"left\\"><span>CC</span></td></tr></tbody></table></p></div>"`;
+
+exports[`Styles Should table block markdown and csv: [table format:markdown] {{
+      | COL A | COL B   | COL C  |
+      |-------|---------|--------|
+      | AA    | BB      |CC      |
+    }} 1`] = `"<div><p><table><thead><tr><th align=\\"left\\"><span> COL A </span></th><th align=\\"left\\"><span> COL B   </span></th><th align=\\"left\\"><span> COL C  </span></th></tr></thead><tbody><tr><td align=\\"left\\"><span> AA    </span></td><td align=\\"left\\"><span> BB      </span></td><td align=\\"left\\"><span>CC      </span></td></tr></tbody></table></p></div>"`;
 
 exports[`Table Should render table: | Tables        | Are           | Cool  |
 |---------------|---------------|-------|
