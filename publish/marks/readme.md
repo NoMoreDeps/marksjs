@@ -12,10 +12,10 @@ Discover it on its official website ***[Marks Website](https://marksjs.com)***.
 ### Installation
 ```sh
 # With npm
-npm i -S @marksjs/marks
+npm i -S @marks-js/marks
 
 # With yarn
-yarn add @marksjs/marks
+yarn add @marks-js/marks
 ```
 **Marks** comes with Typescript declaration files, so you don't need to install separated definition.
 
