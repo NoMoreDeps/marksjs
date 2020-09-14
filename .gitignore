@@ -7,3 +7,11 @@ dist
 plugins/**/node_modules
 plugins/**/out
 plugins/**/dist
+*/**/*.pdf
+*/**/*.torrent
+*/**/*.xls
+*/**/*.xlsx
+*/**/*.doc
+*/**/*.docx
+*/**/*.mp3
+yarn.lock
