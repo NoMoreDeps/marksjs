@@ -14,4 +14,4 @@ plugins/**/dist
 */**/*.doc
 */**/*.docx
 */**/*.mp3
-yarn.lock
+
