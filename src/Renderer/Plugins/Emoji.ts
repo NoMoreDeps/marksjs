@@ -19,11 +19,20 @@ export class EmojiRenderer implements IRenderingEnine {
 
   render(): string {
     let rgx  = /\:([aA-zZ0-9+-]+)\:/ ;
-    let rgx2 = /\:-+\:/            ;
-    this._succeeded = rgx.test(this.content) && !rgx2.test(this.content);
+    let rgxSkipBegin = /\:(-+)\:/;
+    let rgxSkipEnd = /##(-+)##/;
+    let content = this.content;
 
+    content = content.replace(rgxSkipBegin, `##$1##`);
+
+    this._succeeded = rgx.test(content);
     if (this._succeeded) {
-      return this.content.replace(rgx, `<i class="em em-$1" aria-role="presentation"></i>`);
+      content = content.replace(rgx, `<i class="em em-$1" aria-role="presentation"></i>`);
+    }
+
+    content = content.replace(rgxSkipEnd, `:$1:`);
+    if (this._succeeded) {
+      return content;
     }
 
     return this.content;
