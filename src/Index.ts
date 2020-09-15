@@ -8,6 +8,7 @@ export { TRenderingOption }    from "./Interfaces/IRenderingOption"   ;
 import { BoldRenderer }        from "./Renderer/Plugins/Bold"        ;
 import { ItalicRenderer }      from "./Renderer/Plugins/Italic"      ;
 import { LineRenderer }        from "./Renderer/Plugins/Line"        ;
+import { EmojiRenderer }       from "./Renderer/Plugins/Emoji"       ;
 
 // Plugin : Inline
 import { InlineQuoteRenderer } from "./Renderer/Plugins/InlineQuote" ;
@@ -38,6 +39,7 @@ export const Plugins = [
   EscapeRenderer      ,
   BoldRenderer        ,
   ItalicRenderer      ,
+  EmojiRenderer       ,
   LineRenderer        ,
   InlineQuoteRenderer ,
   LinkRenderer        ,
@@ -60,6 +62,7 @@ export const Plugins = [
 export { BoldRenderer }        from "./Renderer/Plugins/Bold"        ;
 export { ItalicRenderer }      from "./Renderer/Plugins/Italic"      ;
 export { LineRenderer }        from "./Renderer/Plugins/Line"        ;
+export { EmojiRenderer }       from "./Renderer/Plugins/Emoji"       ;
 
 // Plugin : Inline
 export { InlineQuoteRenderer } from "./Renderer/Plugins/InlineQuote" ;
