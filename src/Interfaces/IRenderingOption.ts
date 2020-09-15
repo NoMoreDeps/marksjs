@@ -6,6 +6,7 @@ export type TRenderingOption = {
   nested?    : "true" | "false" ; // True if component have to render nested ref 
   emp?       : "true" | "false" ; // True if component should accept to render emphasis
   ref?       : string           ; // If the component should be nested, it will not be rendered in the main;
+  xss?       : "true" | "false" ; // force xss check
 
   [key: string]: string | undefined;
 }

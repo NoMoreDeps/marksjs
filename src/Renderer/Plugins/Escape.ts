@@ -4,17 +4,36 @@ import { IVDom_Element } from "../../Interfaces/IVDom_Element";
 
 export class EscapeRenderer implements IRenderingEnine {
   globalRefs : any                                                                                         ;
-  themeStyles      !: any                                                                         ;
+  themeStyles      !: any                                                                                  ;
   private _succeeded: boolean            = false                                                           ;
   public applyTo    : string[]           = ["HEAD", "TEXT", "TABLE", "LIST-O", "LIST-U", "CHECK", "BLOCK"] ;
   public options    : TRenderingOption   = {}                                                              ;
   public content    : string             = ""                                                              ;
-  public domContent : IVDom_Element | null = null                                                            ;
+  public domContent : IVDom_Element | null = null                                                          ;
   public type       : string             = ""                                                              ;
   public weight      : number            = 150                                                             ;
 
 
   render(): string {
+
+    if (this.options.xss !== "false") {
+      if (this.type !== "BLOCK" || (this.type === "BLOCK" && this.options.name !== "html")) {
+        let _rgx = /\</g;
+        this._succeeded = _rgx.test(this.content);
+        if (this._succeeded) {
+          return this.content.replace(_rgx, "&lt;");
+        }
+      }
+    }
+
+    if (this.type === "BLOCK") {
+      this.options.emp !== undefined ?? false;
+    }
+
+    if (this.type === "BLOCK" && !this.options.emp) {
+      this._succeeded = false;
+      return this.content;
+    }
 
     let rgx = /\\\\/g;
     this._succeeded = rgx.test(this.content);
@@ -94,10 +113,6 @@ export class EscapeRenderer implements IRenderingEnine {
   }
 
   canProcess(): boolean {
-    if (this.type === "BLOCK") {
-      return this.options.emp !== undefined ?? false;
-    }
-
     return true;
   }
 

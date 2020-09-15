@@ -23,6 +23,8 @@ export class BlockHtmlRenderer implements IRenderingEnine {
   render(): string {
     if (!this.document) this.document = this.getDocument!();
     this._succeeded = false;
+
+    
     
     prepareInternals(this);
 

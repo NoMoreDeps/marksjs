@@ -68,9 +68,16 @@ blockquote > div {
 Marks is a markup language that aims to keep :anguished: is great with Markdown, but with :mask: 
 simple addition that allows it to be extended in a very simpler way.
 
+Test Xss : <h1>lkjkj</h1>
+
+[table format:csv]{{
+  a,b
+  <h2>dd</h2>,ss
+}}
+
 |ss|dd|
 |---|:---:|
-|asdd| :alien: |
+|asdd| :alien: <h1>dd </h1>|
 
 To be clear, Marks allow custom block definition with a universal declaration syntax, and adds the ability to use options with any line.
 
@@ -904,11 +911,6 @@ sequenceDiagram
   const target = document.createElement("div");
   document.body.appendChild(target);
   renderer.renderFromHtmlNode("#MD_TMP", "#APP")
-
-  setTimeout(() => {
-  renderer.renderFromHtmlNode("#MD_TMP", "#APP");
-  
-  }, 2000);
 
   </script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/components/prism-core.min.js"></script>

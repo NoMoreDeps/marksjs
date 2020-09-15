@@ -6,5 +6,6 @@ export declare type TRenderingOption = {
     nested?: "true" | "false";
     emp?: "true" | "false";
     ref?: string;
+    xss?: "true" | "false";
     [key: string]: string | undefined;
 };
