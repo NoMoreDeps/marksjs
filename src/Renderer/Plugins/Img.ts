@@ -22,7 +22,9 @@ export class ImgRenderer implements IRenderingEnine {
     let rgx = /!\[(?<alt>.*?)\]\((?<link>.*?)\s*(?<title>\".+\")?\)/;
     this._succeeded = rgx.test(this.content);
     if (this._succeeded) {
-      return this.content.replace(rgx, `<img src="$2" alt="$1" title=$3/>`);
+      return this.content.replace(rgx, `<img src="$2" alt="$1" title=$3/>`)
+      .replace(/[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]/g, "")
+      .replace(/[oO][nN][eE][rR][rR][oO][rR]/g,"");
     }
 
     return this.content;

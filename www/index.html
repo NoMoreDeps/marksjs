@@ -70,6 +70,10 @@ simple addition that allows it to be extended in a very simpler way.
 
 Test Xss : <h1>lkjkj</h1>
 
+Test2 : @@xss@@
+
+Test 3: [Xss](javascript: return true; onerror="")
+
 [table format:csv]{{
   a,b
   <h2>dd</h2>,ss
@@ -853,6 +857,7 @@ sequenceDiagram
     );
 
     renderer.context = {
+      xss  : "<h1>Test</h1>",
       ph   : "test" ,
       cmp1 : true   ,
       cmp2 : true   ,

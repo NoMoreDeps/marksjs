@@ -2,6 +2,9 @@ import { IRenderingEnine } from "../../Interfaces/IRenderingEngine";
 
 export const waitAsync = (delay: number = 0) => new Promise(r => setTimeout(() => { r(); }, delay));
 
+export function sanitize(text: string) {
+  return text.replace(/\</g,"&lt;")
+}
 
 export function loadScript(url: string) {
   return new Promise(function(resolve) {
@@ -52,7 +55,7 @@ export function prepareNestedRef(r: IRenderingEnine) {
     const id = itm[0].substr(2).replace("@@", "");
     //console.log(id)
     if (r?.context?.[id]) {
-      ct = ct.replace(`@@${id}@@`, r.context[id]);
+      ct = ct.replace(`@@${id}@@`,  sanitize(r.context[id]));
       continue;
     }
     ct = ct.replace(`@@${id}@@`, `<${r.options.refElt ?? "div"} data-mk-ref="true" id='${id}'></${r.options.refElt ?? "div"}>`);

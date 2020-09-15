@@ -18,7 +18,10 @@ export class LinkRenderer implements IRenderingEnine {
     let rgx = /\[(?<alt>.*?)\]\((?<link>.*?)\s*(?<to>\".+\")?\)/;
     this._succeeded = rgx.test(this.content);
     if (this._succeeded) {
-      let link = this.content.replace(rgx, `<a href="$2" target=$3>$1</a>`);
+      let link = this.content
+        .replace(rgx, `<a href="$2" target=$3>$1</a>`)
+        .replace(/[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]/g, "")
+        .replace(/[oO][nN][eE][rR][rR][oO][rR]/g,"");
       if (link.includes("target=>")) {
         link = link.replace("target=>", ">");
       }

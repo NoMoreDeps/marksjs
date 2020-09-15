@@ -142,11 +142,15 @@ export class VDom_Element implements IVDom_Element{
   }
 
   setAttribute(attName: string, value: string) {
-    this._attributes[attName] = value;
-    this.dom?.setAttribute(attName, value);
-    if (attName === "style") {
-      this._style  = value;
-      this._styles = {};
+    try {
+      this._attributes[attName] = value;
+      this.dom?.setAttribute(attName, value);
+      if (attName === "style") {
+        this._style  = value;
+        this._styles = {};
+      }
+    } catch (ex) {
+      console.error("VDOM", "setAttribute", ex, "for object", this);
     }
   }
 
