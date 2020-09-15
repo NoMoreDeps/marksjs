@@ -18,7 +18,7 @@ export class BlockMermaidRenderer implements IRenderingEnine {
   public weight         : number             = 0             ;
   public cloneRenderer ?: () => IMarksRenderer               ;
   public getDocument   ?: () => IDocument                    ;
-  private _version      : string            = "8.5.2"        ;
+  private _version      : string            = "8.8.0"        ;
   private _selector     : string            = "marksMermaid" ;
   private document     !: IDocument                      ;
 

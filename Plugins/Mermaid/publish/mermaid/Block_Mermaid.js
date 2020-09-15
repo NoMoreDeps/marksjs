@@ -21,7 +21,7 @@ class BlockMermaidRenderer {
         this.domContent = null;
         this.type = "";
         this.weight = 0;
-        this._version = "8.5.2";
+        this._version = "8.8.0";
         this._selector = "marksMermaid";
         if (skipInit) {
             hasBeenInit = true;
