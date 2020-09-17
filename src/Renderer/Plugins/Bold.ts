@@ -15,7 +15,7 @@ export class BoldRenderer implements IRenderingEnine {
 
 
   render(): string {
-    let rgx = /\_{2}(.*?)\_{2}/;
+    let rgx = /\s+\_{2}(.*?)\_{2}/;
     this._succeeded = rgx.test(this.content);
     if (this._succeeded) {
       return this.content.replace(rgx, "<b>$1</b>");

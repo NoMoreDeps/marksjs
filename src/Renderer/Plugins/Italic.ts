@@ -14,7 +14,7 @@ export class ItalicRenderer implements IRenderingEnine {
   public weight      : number            = 100                                                             ;
 
   render(): string {
-    let rgx = /\_{1}(.*?)\_{1}/;
+    let rgx = /\s+\_{1}(.*?)\_{1}/;
     this._succeeded = rgx.test(this.content);
     if (this._succeeded) {
       return this.content.replace(rgx, "<em>$1</em>");
