@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/NoMoreDeps/marksjs"><img src="https://cdn.jsdelivr.net/gh/NoMoreDeps/marksjs/statics/banner.gif" /></a></p>
+<p align="center"><a href="https://github.com/NoMoreDeps/marksjs"><img src="https://marksjs.com/assets/banner.gif" /></a></p>
 ## { Marks }
 
 **Marks** is a markup language and a renderer that aims to keep the simplicity of *Markdown*,  
