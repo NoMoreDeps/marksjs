@@ -15,7 +15,7 @@ export class EmojiRenderer implements IRenderingEnine {
   public domContent : IVDom_Element | null = null                                                                 ;
   public type       : string             = ""                                                                     ;
   public weight      : number            = 100                                                                    ;
-  private _serverPath : string           = "https://gitcdn.link/repo/NoMoreDeps/marksjs/master/statics/emoji.css" ;
+  private _serverPath : string           = "https://cdn.jsdelivr.net/gh/NoMoreDeps/marksjs/statics/emoji.css"     ;
 
   render(): string {
     let rgx  = /\:([aA-zZ0-9+-]+)\:/ ;
