@@ -1,21 +1,21 @@
 import { TRenderingOption }   from "../Interfaces/IRenderingOption" ;
 import { RendererRepository } from "../Renderer/RendererRepository" ;
 import { IModel }             from "./IModel"                       ;
-import { IVDom_Element } from "../Interfaces/IVDom_Element";
-import { IDocument } from "../Interfaces/IDocument";
-import { Document } from "../VDom/Html/Document";
+import { IVDom_Element }      from "../Interfaces/IVDom_Element"    ;
+import { IDocument }          from "../Interfaces/IDocument"        ;
+import { Document }           from "../VDom/Html/Document"          ;
 
 export type TModel  = BaseModel & IModel;
 
 export class BaseModel {
-  source      : string             = ""   ;
-  cleanSource : string             = ""   ;
-  output      : string             = ""   ;
+  source      : string               = ""   ;
+  cleanSource : string               = ""   ;
+  output      : string               = ""   ;
   domElement  : IVDom_Element | null = null ;
-  options     : TRenderingOption   = {}   ;
-  processed   : number             = 0    ;
-  dirty       : boolean            = false;
-  document    : IDocument          = new Document("Dom")
+  options     : TRenderingOption     = {}   ;
+  processed   : number               = 0    ;
+  dirty       : boolean              = false;
+  document    : IDocument            = new Document("Dom");
 
   constructor(private _RendererRepository?: RendererRepository) {}
 
