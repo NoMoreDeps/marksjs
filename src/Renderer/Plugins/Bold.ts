@@ -15,10 +15,11 @@ export class BoldRenderer implements IRenderingEnine {
 
 
   render(): string {
+    let rgxReplace = /\_{2}(.*?)\_{2}/;
     let rgx = /\s+\_{2}(.*?)\_{2}/;
     this._succeeded = rgx.test(this.content);
     if (this._succeeded) {
-      return this.content.replace(rgx, "<b>$1</b>");
+      return this.content.replace(rgxReplace, "<b>$1</b>");
     }
 
     rgx = /\*{2}(.*?)\*{2}/;
