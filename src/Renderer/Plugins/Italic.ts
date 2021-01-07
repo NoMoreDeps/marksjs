@@ -14,10 +14,11 @@ export class ItalicRenderer implements IRenderingEnine {
   public weight      : number            = 100                                                             ;
 
   render(): string {
+    let rgxReplace = /\_{1}(.*?)\_{1}/;
     let rgx = /\s+\_{1}(.*?)\_{1}/;
     this._succeeded = rgx.test(this.content);
     if (this._succeeded) {
-      return this.content.replace(rgx, "<em>$1</em>");
+      return this.content.replace(rgxReplace, "<em>$1</em>");
     }
 
     rgx = /\*{1}(.*?)\*{1}/;
