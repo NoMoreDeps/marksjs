@@ -43,7 +43,10 @@ jobs:
       
     - name: Build Marks
       run: npx tsc
-    
+
+    - name: Test Marks
+      run: npx jest --coverage
+
     - name: Login to npm
       run: npx npm-cli-login -u ${{secrets.NPM_USER}} -p ${{secrets.NPM_PASS}} -e ${{secrets.NPM_EMAIL}}
        
