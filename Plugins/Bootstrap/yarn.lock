@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@marks-js/marks@^1.1.26":
-  version "1.1.26"
-  resolved "https://registry.yarnpkg.com/@marks-js/marks/-/marks-1.1.26.tgz#c9d13932ac3b0bc1d58a57b5ee132214d34809e1"
-  integrity sha512-ipUgX6wOnTzapMm5VyetaNPfx+MmzEoBQLL4C4JKofLq3YtyAmc5x0BExKMW1nnKeHi+dJwEPOThLgrJby9iIQ==
+"@marks-js/marks@^1.1.30":
+  version "1.1.30"
+  resolved "https://registry.yarnpkg.com/@marks-js/marks/-/marks-1.1.30.tgz#c5c354df3d75e53e703765d6c8e337b4c6148f84"
+  integrity sha512-vBUag/+FbfslmenkWneqdESdqxpz/vEF7OCfVaKmkbVZiy3SUtjoTSxX3qOOBcnZ+wxByXDdIww5tKX0K5Dd/A==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
