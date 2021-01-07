@@ -12,9 +12,17 @@ export declare class VDom_Element implements IVDom_Element {
     private _attributes;
     private _styles;
     private _style;
+    private _MountScript;
     get id(): string;
     get childElementCount(): number;
     constructor(_doc: Document, _tagName: string, target: "Dom" | "Text", textContent?: string | undefined);
+    /**
+     * Will add a script to execute after the dom object has been mounted.
+     * If rendered to text, it will include a script tag
+     * @param script
+     */
+    onMount(script: string): void;
+    getScripts(): string[];
     get tagName(): string;
     getChildItem(index: number): IVDom_Element;
     prepend(element: IVDom_Element): void;

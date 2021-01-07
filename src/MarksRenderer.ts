@@ -107,7 +107,7 @@ export class MarksRenderer implements IMarksRenderer {
     let blockLevel = 0;
     let codeLevel = 0;
 
-    const startTime = performance.now();
+    //const startTime = performance.now();
     lines.forEach(_ => {
       let check = false;
       an.filter(__ => __.apply.includes(state)).forEach(__ => {
@@ -310,7 +310,7 @@ export class MarksRenderer implements IMarksRenderer {
 
     const document = new Document(this.targetRender);
 
-    const endTime = performance.now();
+    //const endTime = performance.now();
     const targetRenderer = target || document.createElement("div");
     processedElts.forEach(_ => _.domElement && targetRenderer.appendChild(_.domElement));
     //console.log(`Processed in ${endTime - startTime} ms`);
@@ -335,19 +335,29 @@ export class MarksRenderer implements IMarksRenderer {
   renderFromHtmlNode(templateId: string, targetSelector ?: string) {
     const _document = new Document(this.targetRender);
 
-    let doc = document.querySelector<HTMLTemplateElement>(templateId)?.innerHTML ?? "";
-    var textDecoder = document.createElement("textarea");
-    textDecoder.innerHTML = doc;
-    doc = textDecoder.value ?? "";
+    let doc               = document.querySelector<HTMLTemplateElement>(templateId)?.innerHTML ?? "" ;
+    var textDecoder       = document.createElement("textarea")                                       ;
+    textDecoder.innerHTML = doc                                                                      ;
+    doc                   = textDecoder.value ?? ""                                                  ;
 
     const renderedDom = this.internalRender(doc, false);
 
     const targetRenderer = document.querySelector<HTMLElement>(targetSelector ?? "body") ?? document.body;
+    const script = document.createElement("script");
+    script.type="text/javascript";
+    script.appendChild(document.createTextNode(renderedDom.getScripts().join("\n")));
+    renderedDom.toDom()!.appendChild(script);
     targetRenderer.appendChild(renderedDom.toDom()!);
   }
 
   renderToText(template: string, indentLevel: number = 2) {
-    return this.internalRender(template, false).toHtml(indentLevel)
+    const vDomElement = this.internalRender(template, false);
+
+    return vDomElement.toHtml(indentLevel) + `
+    <script type="text/javascript">
+      ${vDomElement.getScripts().join("\n\n")}
+    </script>
+    `;
   }
 
   /**
@@ -360,6 +370,11 @@ export class MarksRenderer implements IMarksRenderer {
     if (target) {
       (typeof target === "string" ? document.querySelector<HTMLElement>(target)! : target).appendChild(res.toDom()!);
     }
+    
+    const script = document.createElement("script");
+    script.type="text/javascript";
+    script.appendChild(document.createTextNode(res.getScripts().join("\n")));
+    res.toDom()?.appendChild(script);
     return res.toDom()!;
   }
 
@@ -370,8 +385,8 @@ export class MarksRenderer implements IMarksRenderer {
   registerRenderers(...plugins: IRenderingEnine[]) {
     // Used if the plugin needs to render Marks recur
     plugins.forEach(plugin => {
-      plugin.cloneRenderer = this.clone.bind(this);
-      plugin.getDocument = () => new Document(this.targetRender);
+      plugin.cloneRenderer = this.clone.bind(this)                 ;
+      plugin.getDocument   = () => new Document(this.targetRender) ;
       plugin.willInit?.();
       this._rendererRepo.register(plugin);
     });

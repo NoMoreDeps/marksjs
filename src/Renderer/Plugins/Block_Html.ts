@@ -32,6 +32,7 @@ export class BlockHtmlRenderer implements IRenderingEnine {
     this.domContent.setInnerHTML(this.content);
    
     processInternals(this, "html");
+
     return this.content;
   }
 

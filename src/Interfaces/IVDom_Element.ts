@@ -25,6 +25,9 @@ export interface IVDom_Element {
   getAttribute(attName: string): any;
   removeAttribute(attName: string): void;
 
+  getScripts(): string[];
+  onMount(script: string): void;
+
   addEventListener(eventName: string, handler: (...args: any[]) => void): void;
   
   toDom(): HTMLElement | null;

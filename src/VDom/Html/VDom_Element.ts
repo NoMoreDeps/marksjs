@@ -1,14 +1,15 @@
-import { HtmlParser, Node, NODE_TYPE } from "../Parser/Index" ;
-import { Document }                    from "./Document"      ;
-import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { HtmlParser, Node, NODE_TYPE } from "../Parser/Index"                ;
+import { Document }                    from "./Document"                     ;
+import { IVDom_Element }               from "../../Interfaces/IVDom_Element" ;
 
 export class VDom_Element implements IVDom_Element{
   dom                 ?: HTMLElement                    ;
-  private childNodes   : IVDom_Element[] = []           ;
-  private _classList   : string[] = []                  ;
-  private _attributes  : { [key: string]: any } = {}    ;
+  private childNodes   : IVDom_Element[]           = [] ;
+  private _classList   : string[]                  = [] ;
+  private _attributes  : { [key: string]: any }    = {} ;
   private _styles      : { [key: string]: string } = {} ;
-  private _style       : string = ""                    ;
+  private _style       : string                    = "" ;
+  private _MountScript : string[]                  = [] ;
 
   get id(): string {
     return this.getAttribute("id");
@@ -28,6 +29,24 @@ export class VDom_Element implements IVDom_Element{
       this.dom = document.createTextNode(textContent!) as any as HTMLElement;
     };
     target === "Dom" && this._tagName !== "text" && this._tagName !== "innertext" && (this.dom = document.createElement(_tagName));
+  }
+
+  /**
+   * Will add a script to execute after the dom object has been mounted.
+   * If rendered to text, it will include a script tag
+   * @param script 
+   */
+  onMount(script: string) {
+    this._MountScript.push(script);
+  }
+
+  getScripts() {
+    const res = new Array<string>();
+    for(let i=0; i<this.childElementCount; i++) {
+      res.push(...this.getChildItem(i).getScripts());
+    }
+    res.push(...this._MountScript);
+    return res;
   }
 
   get tagName() {
