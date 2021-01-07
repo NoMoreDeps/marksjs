@@ -28,6 +28,14 @@ renderer.registerRenderers(
   new BlockMermaidRenderer(),
   /* ... */
   );
+
+  // You can override version manually
+const renderer = new MarksRenderer();
+renderer.registerRenderers(
+  /* ... */
+  new BlockMermaidRenderer({ version: "8.8.0" }),
+  /* ... */
+  );
 ```
 
 #### From CDN for direct use
@@ -37,7 +45,7 @@ renderer.registerRenderers(
 <script src="https://unpkg.com/@marks-js/mermaid/dist/Marks.Mermaid.dist.js"></script>
 
 <!-- Or a specific one-->
-<script src="https://unpkg.com/@marks-js/mermaid@1.0.33/dist/Marks.Mermaid.dist.js"></script>
+<script src="https://unpkg.com/@marks-js/mermaid@8.8.0/dist/Marks.Mermaid.dist.js"></script>
 ```
 
 ```typescript
