@@ -1,6 +1,6 @@
 {
   "name": "@marks-js/bootstrap",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "Bootstrap theme and plugins for Marks rendering engine",
   "main": "index.js",
   "author": "NoMoreDeps",

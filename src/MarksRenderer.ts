@@ -343,21 +343,24 @@ export class MarksRenderer implements IMarksRenderer {
     const renderedDom = this.internalRender(doc, false);
 
     const targetRenderer = document.querySelector<HTMLElement>(targetSelector ?? "body") ?? document.body;
-    const script = document.createElement("script");
-    script.type="text/javascript";
-    script.appendChild(document.createTextNode(renderedDom.getScripts().join("\n")));
-    renderedDom.toDom()!.appendChild(script);
+    const scripts = renderedDom.getScripts().join("\n\n");
+    if (scripts.length) {
+      const script = document.createElement("script");
+      script.type="text/javascript";
+      script.appendChild(document.createTextNode(renderedDom.getScripts().join("\n")));
+      renderedDom.toDom()!.appendChild(script);
+    }
     targetRenderer.appendChild(renderedDom.toDom()!);
   }
 
   renderToText(template: string, indentLevel: number = 2) {
     const vDomElement = this.internalRender(template, false);
+    const scripts = vDomElement.getScripts().join("\n\n");
 
-    return vDomElement.toHtml(indentLevel) + `
+    return vDomElement.toHtml(indentLevel) + (scripts.length ? `
     <script type="text/javascript">
       ${vDomElement.getScripts().join("\n\n")}
-    </script>
-    `;
+    </script>` : "");
   }
 
   /**
@@ -367,14 +370,20 @@ export class MarksRenderer implements IMarksRenderer {
    */
   render(template: string, target?: HTMLElement | string): HTMLElement {
     const res = this.internalRender(template, false);
+
+    const scripts = res.getScripts().join("\n\n");
+
+    if (scripts.length) {
+      const script = document.createElement("script");
+      script.type="text/javascript";
+      script.appendChild(document.createTextNode(scripts));
+      res.toDom()?.appendChild(script);
+    }
+
     if (target) {
       (typeof target === "string" ? document.querySelector<HTMLElement>(target)! : target).appendChild(res.toDom()!);
     }
     
-    const script = document.createElement("script");
-    script.type="text/javascript";
-    script.appendChild(document.createTextNode(res.getScripts().join("\n")));
-    res.toDom()?.appendChild(script);
     return res.toDom()!;
   }
 
