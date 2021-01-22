@@ -11,11 +11,12 @@ export declare class BlockMermaidRenderer implements IRenderingEnine {
     domContent: IVDom_Element | null;
     type: string;
     weight: number;
-    cloneRenderer?: () => IMarksRenderer;
-    getDocument?: () => IDocument;
     private _version;
     private _selector;
+    cloneRenderer?: () => IMarksRenderer;
+    getDocument?: () => IDocument;
     private document;
+    private getMountedScript;
     constructor({ skipInit, version, selector }?: {
         skipInit?: boolean;
         version?: string;
@@ -25,5 +26,5 @@ export declare class BlockMermaidRenderer implements IRenderingEnine {
     succeeded(): boolean;
     canProcess(): boolean;
     set(type: string, content: string, options: TRenderingOption): void;
-    renderFinished(targetElement: HTMLElement | undefined): Promise<void>;
+    willInit(): Promise<void>;
 }

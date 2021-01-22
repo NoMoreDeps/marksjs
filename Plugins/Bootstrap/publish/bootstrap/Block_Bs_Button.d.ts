@@ -11,10 +11,14 @@ export declare class BlockBsButtonRenderer implements IRenderingEnine {
     domContent: IVDom_Element | null;
     type: string;
     weight: number;
+    private _version;
+    private _serverPath;
     getDocument?: () => IDocument;
     private document;
+    private getMountedScript;
     render(): string;
     succeeded(): boolean;
     canProcess(): boolean;
     set(type: string, content: string, options: TRenderingOption): void;
+    willInit(): Promise<void>;
 }

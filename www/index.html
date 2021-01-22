@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>Document</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />-->
   <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" rel="stylesheet" /> -->
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>-->
   <!-- <script src="https://unpkg.com/mermaid@8.5.2/dist/mermaid.min.js"></script> -->
   <script src="/js/Marks.dist.js"></script>
   <script src="/js/Marks.Mermaid.dist.js"></script>
@@ -63,11 +63,11 @@ blockquote > div {
   </style>
 </head>
 <body>
-  <template id="MD_TMP">
-Hello
-
-[html]{{
-  <span style="color:red">World</span>
+<template id="MD_TMP">
+[bs-button]{{
+  "type"    : "primary", 
+  "text": "My Button", 
+  "outline" : true
 }}
   </template>
   <template id="MD_TMP_">
@@ -860,7 +860,7 @@ sequenceDiagram
     renderer.registerRenderers(
       ...Marks.Plugins.map(_ => new _()),
       mermaidPlugin,
-      //...Marks_Bootstrap.BsPlugins.map(_ => new _())
+      ...Marks_Bootstrap.BsPlugins.map(_ => new _())
     );
 
     renderer.context = {
@@ -881,6 +881,9 @@ sequenceDiagram
         danger  : "text-danger" ,
         justify : "justify"     ,
       }
+    },
+    blockquote: {
+      classes: "blockquote"
     },
     table: {
       classes: "table",

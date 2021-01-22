@@ -1,26 +1,46 @@
-import { IMarksRenderer, TRenderingOption, IRenderingEnine } from "@marks-js/marks"                         ;
-import { loadAssets, prepareInternals, processRef }                                        from "@marks-js/marks/Renderer/Plugins/Helper" ;
-import { IVDom_Element } from "@marks-js/marks/Interfaces/IVDom_Element";
-import { IDocument } from "@marks-js/marks/Interfaces/IDocument";
+import { IMarksRenderer, TRenderingOption, IRenderingEnine } from "@marks-js/marks"                          ;
+import { loadAssets, processRef }                            from "@marks-js/marks/Renderer/Plugins/Helper"  ;
+import { IVDom_Element }                                     from "@marks-js/marks/Interfaces/IVDom_Element" ;
+import { IDocument }                                         from "@marks-js/marks/Interfaces/IDocument"     ;
 
-let hasBeenInit = false;
+let hasBeenInit       = false ;
+let _MountScriptIndex = 0     ;
 declare var mermaid: any;
 
 export class BlockMermaidRenderer implements IRenderingEnine {
-  themeStyles          !: any                                ;
-  globalRefs            : any                                ;
-  private _succeeded    : boolean = false                    ;
-  public applyTo        : string[]           = ["BLOCK"]     ;
-  public options        : TRenderingOption   = {}            ;
-  public content        : string             = ""            ;
-  public domContent     : IVDom_Element | null = null        ;
-  public type           : string             = ""            ;
-  public weight         : number             = 0             ;
-  public cloneRenderer ?: () => IMarksRenderer               ;
-  public getDocument   ?: () => IDocument                    ;
-  private _version      : string            = "8.8.0"        ;
-  private _selector     : string            = "marksMermaid" ;
-  private document     !: IDocument                      ;
+  themeStyles            !: any                                   ;
+  globalRefs              : any                                   ;
+  private _succeeded      : boolean = false                       ;
+  public applyTo          : string[]             = ["BLOCK"]      ;
+  public options          : TRenderingOption     = {}             ;
+  public content          : string               = ""             ;
+  public domContent       : IVDom_Element | null = null           ;
+  public type             : string               = ""             ;
+  public weight           : number               = 0              ;
+  private _version        : string               = "8.8.0"        ;
+  private _selector       : string               = "marksMermaid" ;
+  public cloneRenderer   ?: () => IMarksRenderer                  ;
+  public getDocument     ?: () => IDocument                       ;
+  private document       !: IDocument                             ;
+
+  private getMountedScript() {
+    _MountScriptIndex++;
+    return `function _MarksMermaidMountScript${_MountScriptIndex}() {
+      if (!window["mermaid"]) {
+        setTimeout(() => {
+          _MarksMermaidMountScript${_MountScriptIndex}();
+        }, 100);
+        return;
+      }
+      mermaid.init(undefined, ".${this._selector}");
+
+      for (let i=0; i<5; i++) {
+        setTimeout(() => {
+          document.querySelectorAll(".${this._selector} > svg").forEach(_ => _.style.width = "100%");
+        }, 100 * i);
+      }
+    };_MarksMermaidMountScript${_MountScriptIndex}();`;
+  }
 
   constructor({skipInit, version, selector}: {skipInit?: boolean, version?: string, selector?: string} = {skipInit: false}) {
     if (skipInit) {
@@ -43,7 +63,7 @@ export class BlockMermaidRenderer implements IRenderingEnine {
     this.domContent.appendText(this.content);
 
     processRef(this);
-
+    this.domContent.onMount(this.getMountedScript());
     return this.content;
   }
 
@@ -64,9 +84,8 @@ export class BlockMermaidRenderer implements IRenderingEnine {
     this.options = options ;
   }
 
-  async renderFinished(targetElement: HTMLElement | undefined) {
-    const waitAsync = () => new Promise(r => setTimeout(() => { r(); }, 0));
-
+  async willInit() {
+    const waitAsync = () => new Promise(r => setTimeout(() => { r(true); }, 0));
     if (!hasBeenInit) {
       hasBeenInit = true;
       
@@ -75,29 +94,12 @@ export class BlockMermaidRenderer implements IRenderingEnine {
       while(!(window as any)["mermaid"]) {
         await waitAsync();
       }
-
+  
       mermaid.initialize({
         startOnLoad:false,
         theme: "forest"
       });
     }
 
-    if (targetElement) {
-      while(!targetElement.parentElement) {
-        await waitAsync();
-      }
-    }
-
-    while(!(window as any)["mermaid"]) {
-      await waitAsync();
-    }
-    
-    mermaid.init(undefined, `.${this._selector}`);
-
-    for (let i=0; i<5; i++) {
-      setTimeout(() => {
-        document.querySelectorAll<HTMLElement>(`.${this._selector} > svg`).forEach(_ => _.style.width = "100%")
-      }, 100 * i);
-    }
   }
 }

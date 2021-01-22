@@ -5,7 +5,6 @@ import { IVDom_Element }                                             from "../..
 import { IDocument }                                                 from "../../Interfaces/IDocument"        ;
 
 let hasBeenInit = false;
-declare var Prism: any;
 
 export class CodeRenderer implements IRenderingEnine {
   themeStyles        !: any                                                                    ;
@@ -13,7 +12,7 @@ export class CodeRenderer implements IRenderingEnine {
   private _succeeded  : boolean               = false                                          ;
   public applyTo      : string[]              = ["CODE"]                                       ;
   public options      : TRenderingOption      = {}                                             ;
-  public domContent   : IVDom_Element | null    = null                                           ;
+  public domContent   : IVDom_Element | null    = null                                         ;
   public content      : string                = ""                                             ;
   public type         : string                = ""                                             ;
   public weight       : number                = 0                                              ;
@@ -22,6 +21,16 @@ export class CodeRenderer implements IRenderingEnine {
   private _depName    : string                = "marks_prism_dep";
   private document     !: IDocument                      ;
   public getDocument   ?: () => IDocument                ;
+
+  private _MountScript = `function _mksMermaidMountScript() {
+    if (!window["Prism"]) {
+      setTimeout(() => {
+        _mksMermaidMountScript();
+      }, 100);
+      return;
+    }
+    Prism.highlightAll();
+  };_mksMermaidMountScript();`
   
   constructor({skipInit, version, serverPath}: {skipInit?: boolean, version?: string, serverPath?: string} = {skipInit: false}){
     if (!hasBeenInit) hasBeenInit = !!skipInit;
@@ -45,7 +54,7 @@ export class CodeRenderer implements IRenderingEnine {
     }
 
     processRef(this);
-
+    this.domContent.onMount(this._MountScript);
     return this.content;
   }
 
@@ -63,7 +72,7 @@ export class CodeRenderer implements IRenderingEnine {
     this.options = options ;
   }
 
-  async renderFinished(targetElement: HTMLElement | undefined) {
+  async willInit() {
     if (!hasBeenInit) {
       hasBeenInit  = true  ;
       
@@ -77,11 +86,5 @@ export class CodeRenderer implements IRenderingEnine {
         `${this._serverPath}/${this._version}/components/prism-typescript.min.js`
       ]);
     }
-
-    while(!(window as any)["Prism"]) {
-      await waitAsync();
-    }
-
-    Prism.highlightAll();
   }
 }

@@ -17,6 +17,7 @@ export declare class CodeRenderer implements IRenderingEnine {
     private _depName;
     private document;
     getDocument?: () => IDocument;
+    private _MountScript;
     constructor({ skipInit, version, serverPath }?: {
         skipInit?: boolean;
         version?: string;
@@ -26,5 +27,5 @@ export declare class CodeRenderer implements IRenderingEnine {
     succeeded(): boolean;
     canProcess(): boolean;
     set(type: string, content: string, options: TRenderingOption): void;
-    renderFinished(targetElement: HTMLElement | undefined): Promise<void>;
+    willInit(): Promise<void>;
 }
