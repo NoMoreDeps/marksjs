@@ -344,23 +344,29 @@ export class MarksRenderer implements IMarksRenderer {
 
     const targetRenderer = document.querySelector<HTMLElement>(targetSelector ?? "body") ?? document.body;
     const scripts = renderedDom.getScripts().join("\n\n");
+    let script: HTMLScriptElement | undefined;
     if (scripts.length) {
-      const script = document.createElement("script");
+      script = document.createElement("script");
       script.type="text/javascript";
       script.appendChild(document.createTextNode(renderedDom.getScripts().join("\n")));
       renderedDom.toDom()!.appendChild(script);
     }
     targetRenderer.appendChild(renderedDom.toDom()!);
+    script && targetRenderer.appendChild(script);
   }
 
   renderToText(template: string, indentLevel: number = 2) {
     const vDomElement = this.internalRender(template, false);
     const scripts = vDomElement.getScripts().join("\n\n");
+    
+    if (scripts.length) {
+      const scriptTag = new Document(this.targetRender).createElement("script");
+      scriptTag.setAttribute("type", "text/javascript");
+      scriptTag.appendText(scripts);
+      vDomElement.appendChild(scriptTag);
+    }
 
-    return vDomElement.toHtml(indentLevel) + (scripts.length ? `
-    <script type="text/javascript">
-      ${vDomElement.getScripts().join("\n\n")}
-    </script>` : "");
+    return vDomElement.toHtml(indentLevel);
   }
 
   /**
@@ -373,8 +379,9 @@ export class MarksRenderer implements IMarksRenderer {
 
     const scripts = res.getScripts().join("\n\n");
 
+    let script: HTMLScriptElement | undefined;
     if (scripts.length) {
-      const script = document.createElement("script");
+      script = document.createElement("script");
       script.type="text/javascript";
       script.appendChild(document.createTextNode(scripts));
       res.toDom()?.appendChild(script);

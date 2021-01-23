@@ -22,7 +22,7 @@ export class CodeRenderer implements IRenderingEnine {
   private document     !: IDocument                      ;
   public getDocument   ?: () => IDocument                ;
 
-  private _MountScript = `function _mksMermaidMountScript() {
+  private _MountScript = `function _mksPrismMountScript() {
     if (!window["Prism"]) {
       setTimeout(() => {
         _mksMermaidMountScript();
@@ -30,7 +30,7 @@ export class CodeRenderer implements IRenderingEnine {
       return;
     }
     Prism.highlightAll();
-  };_mksMermaidMountScript();`
+  };_mksPrismMountScript();`
   
   constructor({skipInit, version, serverPath}: {skipInit?: boolean, version?: string, serverPath?: string} = {skipInit: false}){
     if (!hasBeenInit) hasBeenInit = !!skipInit;
