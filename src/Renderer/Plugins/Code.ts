@@ -1,26 +1,26 @@
-import { IRenderingEnine }                                           from "../../Interfaces/IRenderingEngine" ;
-import { TRenderingOption }                                          from "../../Interfaces/IRenderingOption" ;
-import { applyStyle, processRef, loadScript, loadAssets, waitAsync } from "./Helper"                          ;
-import { IVDom_Element }                                             from "../../Interfaces/IVDom_Element"    ;
-import { IDocument }                                                 from "../../Interfaces/IDocument"        ;
+import { IRenderingEnine }                    from "../../Interfaces/IRenderingEngine" ;
+import { TRenderingOption }                   from "../../Interfaces/IRenderingOption" ;
+import { applyStyle, processRef, loadAssets } from "./Helper"                          ;
+import { IVDom_Element }                      from "../../Interfaces/IVDom_Element"    ;
+import { IDocument }                          from "../../Interfaces/IDocument"        ;
 
 let hasBeenInit = false;
 
 export class CodeRenderer implements IRenderingEnine {
-  themeStyles        !: any                                                                    ;
-  globalRefs          : any                                                                    ;
-  private _succeeded  : boolean               = false                                          ;
-  public applyTo      : string[]              = ["CODE"]                                       ;
-  public options      : TRenderingOption      = {}                                             ;
-  public domContent   : IVDom_Element | null    = null                                         ;
-  public content      : string                = ""                                             ;
-  public type         : string                = ""                                             ;
-  public weight       : number                = 0                                              ;
-  private _version    : string                = "1.20.0"                                       ;
-  private _serverPath : string                = "https://cdnjs.cloudflare.com/ajax/libs/prism" ;
-  private _depName    : string                = "marks_prism_dep";
-  private document     !: IDocument                      ;
-  public getDocument   ?: () => IDocument                ;
+  themeStyles        !    : any                                                                    ;
+  globalRefs              : any                                                                    ;
+  private _succeeded      : boolean               = false                                          ;
+  public applyTo          : string[]              = ["CODE"]                                       ;
+  public options          : TRenderingOption      = {}                                             ;
+  public domContent       : IVDom_Element | null    = null                                         ;
+  public content          : string                = ""                                             ;
+  public type             : string                = ""                                             ;
+  public weight           : number                = 0                                              ;
+  private _version        : string                = "1.20.0"                                       ;
+  private _serverPath     : string                = "https://cdnjs.cloudflare.com/ajax/libs/prism" ;
+  private _depName        : string                = "marks_prism_dep"                              ;
+  private document     !  : IDocument                                                              ;
+  public getDocument     ?: () => IDocument                                                        ;
 
   private _MountScript = `function _mksPrismMountScript() {
     if (!window["Prism"]) {
