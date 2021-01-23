@@ -1,22 +1,22 @@
-import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
-import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
-import { applyStyle, prepareInternals, processInternals }                    from "./Helper"                          ;
-import { IVDom_Element } from "../../Interfaces/IVDom_Element";
-import { IDocument } from "../../Interfaces/IDocument";
-import { VDom_Element } from "../../VDom/Html/VDom_Element";
+import { IRenderingEnine }                                from "../../Interfaces/IRenderingEngine" ;
+import { TRenderingOption }                               from "../../Interfaces/IRenderingOption" ;
+import { applyStyle, prepareInternals, processInternals } from "./Helper"                          ;
+import { IVDom_Element }                                  from "../../Interfaces/IVDom_Element"    ;
+import { IDocument }                                      from "../../Interfaces/IDocument"        ;
+import { VDom_Element }                                   from "../../VDom/Html/VDom_Element"      ;
 
 export class ListRenderer implements IRenderingEnine {
-  themeStyles      !: any                       ;
-  globalRefs : any                                                  ;
-  private _succeeded : boolean               = false                ;
-  public applyTo     : string[]              = ["LIST-U", "LIST-O"] ;
-  public options     : TRenderingOption      = {}                   ;       
-  public domContent  : IVDom_Element | null    = null                 ;
-  public content     : string                = ""                   ;
-  public type        : string                = ""                   ;
-  public weight      : number                = 0                    ;
-  private document     !: IDocument                      ;
-  public getDocument   ?: () => IDocument                ;
+  themeStyles            !: any                                          ;
+  globalRefs              : any                                          ;
+  private _succeeded      : boolean               = false                ;
+  public applyTo          : string[]              = ["LIST-U", "LIST-O"] ;
+  public options          : TRenderingOption      = {}                   ;
+  public domContent       : IVDom_Element | null    = null               ;
+  public content          : string                = ""                   ;
+  public type             : string                = ""                   ;
+  public weight           : number                = 0                    ;
+  private document       !: IDocument                                    ;
+  public getDocument     ?: () => IDocument                              ;
   render(): string {
     if (!this.document) this.document = this.getDocument!();
 

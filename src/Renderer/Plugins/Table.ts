@@ -1,8 +1,9 @@
-import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
-import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
-import { applyStyle, prepareInternals, processNestedRef, processRef }                    from "./Helper"                          ;
-import { IVDom_Element } from "../../Interfaces/IVDom_Element";
-import { IDocument } from "../../Interfaces/IDocument";
+import { IRenderingEnine }              from "../../Interfaces/IRenderingEngine" ;
+import { TRenderingOption }             from "../../Interfaces/IRenderingOption" ;
+import { IVDom_Element }                from "../../Interfaces/IVDom_Element"    ;
+import { IDocument }                    from "../../Interfaces/IDocument"        ;
+import { prepareInternals, applyStyle } from "./Helper"                          ;
+import { processNestedRef, processRef } from "./Helper"                          ;
 
 type TTableRenderingoptions = TRenderingOption & {
   format    ?: "markdown" | "csv";
@@ -10,17 +11,17 @@ type TTableRenderingoptions = TRenderingOption & {
 };
 
 export class TableRenderer implements IRenderingEnine {
-  themeStyles      !: any                       ;
-  globalRefs : any                                        ;
-  private _succeeded : boolean                = false     ;
-  public applyTo     : string[]               = ["TABLE"] ;
-  public options     : TTableRenderingoptions = {}        ;       
-  public domContent  : IVDom_Element | null     = null      ;
-  public content     : string                 = ""        ;
-  public type        : string                 = ""        ;
-  public weight      : number                 = 0         ;
-  private document     !: IDocument                      ;
-  public getDocument   ?: () => IDocument                ;
+  themeStyles            !: any                                ;
+  globalRefs              : any                                ;
+  private _succeeded      : boolean                = false     ;
+  public applyTo          : string[]               = ["TABLE"] ;
+  public options          : TTableRenderingoptions = {}        ;
+  public domContent       : IVDom_Element | null     = null    ;
+  public content          : string                 = ""        ;
+  public type             : string                 = ""        ;
+  public weight           : number                 = 0         ;
+  private document       !: IDocument                          ;
+  public getDocument     ?: () => IDocument                    ;
   render(): string {
     if (!this.document) this.document = this.getDocument!();
     this._succeeded = false;

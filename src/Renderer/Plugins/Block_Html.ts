@@ -7,7 +7,7 @@ import { IVDom_Element }                      from "../../Interfaces/IVDom_Eleme
 import { IDocument }                          from "../../Interfaces/IDocument"        ;
 
 export class BlockHtmlRenderer implements IRenderingEnine {
-  themeStyles          ! : any                            ;
+  themeStyles           !: any                            ;
   globalRefs             : any                            ;
   private _succeeded     : boolean = false                ;
   public applyTo         : string[]           = ["BLOCK"] ;

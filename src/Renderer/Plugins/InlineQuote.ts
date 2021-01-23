@@ -1,17 +1,17 @@
-import { IRenderingEnine } from "../../Interfaces/IRenderingEngine" ;
-import { TRenderingOption }              from "../../Interfaces/IRenderingOption" ;
-import { IVDom_Element } from "../../Interfaces/IVDom_Element";
+import { IRenderingEnine }  from "../../Interfaces/IRenderingEngine" ;
+import { TRenderingOption } from "../../Interfaces/IRenderingOption" ;
+import { IVDom_Element }    from "../../Interfaces/IVDom_Element"    ;
 
 export class InlineQuoteRenderer implements IRenderingEnine {
-  themeStyles      !: any                       ;
-  globalRefs : any                                        ;
-  private _succeeded: boolean = false;
-  public applyTo    : string[]           = ["HEAD", "TEXT", "TABLE", "LIST-O", "LIST-U", "BLOCK"] ;
-  public options    : TRenderingOption   = {}                                                     ;
-  public content    : string             = ""                                                     ;
-  public domContent : IVDom_Element | null = null                                                   ;
-  public type       : string             = ""                                                     ;
-  public weight     : number             = 100                                                    ;
+  themeStyles       !: any                                                                         ;
+  globalRefs         : any                                                                         ;
+  private _succeeded : boolean = false                                                             ;
+  public applyTo     : string[]           = ["HEAD", "TEXT", "TABLE", "LIST-O", "LIST-U", "BLOCK"] ;
+  public options     : TRenderingOption   = {}                                                     ;
+  public content     : string             = ""                                                     ;
+  public domContent  : IVDom_Element | null = null                                                 ;
+  public type        : string             = ""                                                     ;
+  public weight      : number             = 100                                                    ;
 
   render(): string {
     let rgx = /\`{1}(.*?)\`{1}/;
