@@ -30,7 +30,7 @@ exports[`Code block Should render code block with color: \`\`\`javascript
   }</code></pre></p><script type=\\"text/javascript\\">function _mksPrismMountScript() {
     if (!window[\\"Prism\\"]) {
       setTimeout(() => {
-        _mksMermaidMountScript();
+        _mksPrismMountScript();
       }, 100);
       return;
     }
@@ -44,7 +44,7 @@ exports[`Code block Should render code block: \`\`\`
 "<div><p><pre><code>  Place some code here</code></pre></p><script type=\\"text/javascript\\">function _mksPrismMountScript() {
     if (!window[\\"Prism\\"]) {
       setTimeout(() => {
-        _mksMermaidMountScript();
+        _mksPrismMountScript();
       }, 100);
       return;
     }
