@@ -27,7 +27,7 @@ class CodeRenderer {
         this._MountScript = `function _mksPrismMountScript() {
     if (!window["Prism"]) {
       setTimeout(() => {
-        _mksMermaidMountScript();
+        _mksPrismMountScript();
       }, 100);
       return;
     }

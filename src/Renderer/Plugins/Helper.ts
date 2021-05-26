@@ -1,6 +1,6 @@
 import { IRenderingEnine } from "../../Interfaces/IRenderingEngine";
 
-export const waitAsync = (delay: number = 0) => new Promise(r => setTimeout(() => { r(); }, delay));
+export const waitAsync = (delay: number = 0) => new Promise(r => setTimeout(() => { r(void 0); }, delay));
 
 export function sanitize(text: string) {
   return text.replace(/\</g,"&lt;")

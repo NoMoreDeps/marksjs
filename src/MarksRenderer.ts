@@ -15,7 +15,7 @@ import { IMarksRenderer }     from "./Interfaces/IMarksRenderer"   ;
 import { formatMinSpace }     from "./Renderer/Plugins/Helper"     ;
 import { Document }           from "./VDom/Html/Document"          ;
 import { VDom_Element }       from "./VDom/Html/VDom_Element"      ;
-import { IVDom_Element } from "./Interfaces/IVDom_Element";
+import { IVDom_Element }      from "./Interfaces/IVDom_Element"    ;
 
 export class MarksRenderer implements IMarksRenderer {
   protected _rendererRepo  : RendererRepository     ;

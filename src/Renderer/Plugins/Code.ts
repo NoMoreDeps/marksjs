@@ -25,7 +25,7 @@ export class CodeRenderer implements IRenderingEnine {
   private _MountScript = `function _mksPrismMountScript() {
     if (!window["Prism"]) {
       setTimeout(() => {
-        _mksMermaidMountScript();
+        _mksPrismMountScript();
       }, 100);
       return;
     }
